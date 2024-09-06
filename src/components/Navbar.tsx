@@ -11,12 +11,8 @@ import { HiMiniMoon, HiMiniSun } from "react-icons/hi2"
 
 import { useTheme } from "@/hooks/useTheme"
 
-const navigation = [
-  { name: "Reading", href: "#", current: true },
-  { name: "Completed", href: "#", current: false },
-  { name: "Plan to read", href: "#", current: false },
-  { name: "Droped", href: "#", current: false },
-]
+import { navigation } from "@/App"
+import { Link, useLocation } from "react-router-dom"
 
 function classNames(...classes: (string | boolean | undefined)[]) {
   return classes.filter(Boolean).join(" ")
@@ -40,6 +36,8 @@ function ThemeToggle() {
 }
 
 export const Navbar = () => {
+  const location = useLocation()
+
   return (
     <Disclosure as="nav" className="border-b bg-background">
       <div className="mx-auto max-w-7xl px-2 sm:px-6 lg:px-8">
@@ -58,33 +56,35 @@ export const Navbar = () => {
           <div className="flex flex-1 items-center justify-center sm:items-stretch sm:justify-start">
             {/* Leftmost, logo and app title */}
             <div className="flex flex-shrink-0 items-center">
-              <a href="/">
+              <Link to="/">
                 <GiSpellBook className="size-8 text-primary" />
-              </a>
-              <a href="/">
+              </Link>
+              <Link to="/">
                 <h1 className="ml-2 text-lg font-bold text-primary">
                   Reading List
                 </h1>
-              </a>
+              </Link>
             </div>
 
             {/* Navigation links */}
             <div className="hidden sm:ml-6 sm:block">
               <div className="flex space-x-4">
                 {navigation.map((item) => (
-                  <a
+                  <Link
                     key={item.name}
-                    href={item.href}
-                    aria-current={item.current ? "page" : undefined}
+                    to={item.href}
+                    aria-current={
+                      location.pathname === item.href ? "page" : undefined
+                    }
                     className={classNames(
-                      item.current
+                      location.pathname === item.href
                         ? "bg-slate-300 text-primary dark:bg-slate-800"
                         : "text-primary hover:bg-slate-300 dark:hover:bg-slate-800",
                       "rounded-md px-3 py-2 text-sm font-medium",
                     )}
                   >
                     {item.name}
-                  </a>
+                  </Link>
                 ))}
               </div>
             </div>
@@ -111,11 +111,13 @@ export const Navbar = () => {
           {navigation.map((item) => (
             <DisclosureButton
               key={item.name}
-              as="a"
-              href={item.href}
-              aria-current={item.current ? "page" : undefined}
+              as={Link}
+              to={item.href}
+              aria-current={
+                location.pathname === item.href ? "page" : undefined
+              } // Sprawdza, czy bieżąca ścieżka odpowiada href
               className={classNames(
-                item.current
+                location.pathname === item.href
                   ? "bg-gray-400 text-primary"
                   : "text-primary hover:bg-gray-400 dark:hover:bg-gray-200",
                 "block rounded-md px-3 py-2 text-base font-medium",

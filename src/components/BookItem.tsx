@@ -66,8 +66,8 @@ export const BookItem = ({
               <Button
                 className="rounded-l-md rounded-r-none border-r-0"
                 variant="outline"
-                onClick={() => moveToList(book, "inProgress")}
-                disabled={listType === "inProgress"}
+                onClick={() => moveToList(book, "reading")}
+                disabled={listType === "reading"}
               >
                 <GiBookmarklet className="size-4 sm:size-5" />
               </Button>
@@ -94,8 +94,8 @@ export const BookItem = ({
               <Button
                 className="rounded-l-none rounded-r-md border-l-0"
                 variant="outline"
-                onClick={() => moveToList(book, "done")}
-                disabled={listType === "done"}
+                onClick={() => moveToList(book, "completed")}
+                disabled={listType === "completed"}
               >
                 <GiBookshelf className="size-5 pb-0.5 sm:size-6" />
               </Button>

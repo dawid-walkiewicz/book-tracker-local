@@ -6,7 +6,7 @@ export type Book = {
   author_name: string[]
   first_publish_year: number
   number_of_pages_median: number | null
-  status: "done" | "inProgress" | "backlog"
+  status: "completed" | "reading" | "backlog" | "dropped"
 }
 
 interface BookState {
