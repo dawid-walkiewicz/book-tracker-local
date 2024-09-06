@@ -15,10 +15,10 @@ export const DroppedPage = () => {
         </div>
       </div>
 
-      <h3 className="my-2 flex items-end gap-2 text-xl font-semibold">
+      <h1 className="my-2 flex items-end gap-2 text-2xl font-semibold">
         Dropped
         <TbBookOff className="size-7" />
-      </h3>
+      </h1>
       <DraggableBookList listType="dropped" quote="Don't spend time beating on a wall, hoping to transform it into a door." />
     </div>
   )

@@ -15,10 +15,10 @@ export const CompletedPage = () => {
         </div>
       </div>
 
-      <h3 className="my-2 flex items-end gap-2 text-xl font-semibold">
+      <h1 className="my-2 flex items-end gap-2 text-2xl font-semibold">
         Completed
         <GiBookshelf className="size-8 pb-0.5" />
-      </h3>
+      </h1>
       <DraggableBookList listType="completed" quote="Well done is better than well said." />
     </div>
   )

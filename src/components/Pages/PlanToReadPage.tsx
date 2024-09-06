@@ -15,10 +15,10 @@ export const PlanToReadPage = () => {
         </div>
       </div>
 
-      <h3 className="my-2 flex items-end gap-2 text-xl font-semibold">
+      <h1 className="my-2 flex items-end gap-2 text-2xl font-semibold">
         Plan to read
         <GiBookPile className="size-8" />
-      </h3>
+      </h1>
       <DraggableBookList listType="backlog" quote="Look before, or you'll find yourself behind." />
     </div>
   )

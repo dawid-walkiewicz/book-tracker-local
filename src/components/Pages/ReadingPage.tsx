@@ -15,10 +15,10 @@ export const ReadingPage = () => {
         </div>
       </div>
 
-      <h3 className="my-2 flex items-end gap-2 text-xl font-semibold">
+      <h1 className="my-2 flex items-end gap-2 text-2xl font-semibold">
         Currently Reading
         <GiBookmarklet className="size-7" />
-      </h3>
+      </h1>
       <DraggableBookList listType="reading" quote="A rolling stone gathers no moss." />
     </div>
   )
