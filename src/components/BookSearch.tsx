@@ -127,7 +127,7 @@ export const BookSearch = () => {
             {results.map((book, index) => (
               <TableRow key={index}>
                 <TableCell>{book.title}</TableCell>
-                <TableCell>{book.author_name}</TableCell>
+                <TableCell>{book.author_name.join(", ")}</TableCell>
                 <TableCell className="hidden sm:table-cell">
                   {book.first_publish_year}
                 </TableCell>

@@ -2,7 +2,6 @@ import { useStore, Book } from "@/store"
 
 import {
   Card,
-  CardContent,
   CardDescription,
   CardFooter,
   CardHeader,
@@ -43,21 +42,16 @@ export const BookItem = ({
     >
       <CardHeader>
         <CardTitle>{book.title}</CardTitle>
-        <CardDescription>{book.author_name}</CardDescription>
+        <CardDescription>{book.author_name.join(", ")}</CardDescription>
       </CardHeader>
       <CardFooter className="flex justify-between">
         <Tooltip>
           <TooltipTrigger asChild>
-            {/* <Button variant="destructive" onClick={() => removeBook(book)}>
-              Remove
-            </Button> */}
             <Button
-              className="sm:bg-destructive"
-              variant="outline"
+              variant="destructive"
               onClick={() => removeBook(book)}
             >
               <span className="hidden sm:inline">Remove</span>
-              {/* Widoczny na większych ekranach */}
               <span className="inline sm:hidden">
                 <RiDeleteBin2Fill className="size-4" aria-hidden="true" />
               </span>
