@@ -115,6 +115,7 @@ export const BookSearch = () => {
         <Table>
           <TableHeader>
             <TableRow>
+              <TableHead></TableHead>
               <TableHead>Title</TableHead>
               <TableHead>Author</TableHead>
               <TableHead className="hidden sm:table-cell">Year</TableHead>{" "}
@@ -126,7 +127,14 @@ export const BookSearch = () => {
           <TableBody className="overflow-y-auto">
             {results.map((book, index) => (
               <TableRow key={index}>
-                <TableCell>{book.title}</TableCell>
+                <TableCell className="mr-0 p-2">
+                  <img
+                    src={`https://covers.openlibrary.org/b/id/${book.cover_i}-M.jpg`}
+                    alt={`Cover of ${book.title}`}
+                    className="w-20 object-cover"
+                  />
+                </TableCell>
+                <TableCell className="pl-0">{book.title}</TableCell>
                 <TableCell>{book.author_name.join(", ")}</TableCell>
                 <TableCell className="hidden sm:table-cell">
                   {book.first_publish_year}

@@ -29,7 +29,7 @@ export const AddBookDialog = ({ children }: { children: React.ReactNode }) => {
         <DialogTrigger asChild>
           <Button variant="outline">Add a new book</Button>
         </DialogTrigger>
-        <DialogContent className="sm:max-w-xl">
+        <DialogContent className="sm:max-w-4xl">
           <DialogHeader>
             <DialogTitle>Add a new book</DialogTitle>
             <DialogDescription>
