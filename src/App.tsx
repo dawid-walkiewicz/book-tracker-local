@@ -1,6 +1,6 @@
 import { useEffect } from "react"
 import { BookList } from "./components/BookList"
-import { useStore } from "./store"
+import { useLibraryStore } from "./libraryStore"
 import { Layout } from "./components/Layout"
 
 import { TooltipProvider } from "@/components/ui/tooltip"
@@ -10,6 +10,7 @@ import { ReadingPage } from "./components/Pages/ReadingPage"
 import { PlanToReadPage } from "./components/Pages/PlanToReadPage"
 import { CompletedPage } from "./components/Pages/CompletedPage"
 import { DroppedPage } from "./components/Pages/DroppedPage"
+import { AddBookPage } from "./components/Pages/EditBookPage"
 
 export const navigation = [
   { name: "Home", href: "/", current: true },
@@ -20,7 +21,7 @@ export const navigation = [
 ]
 
 const App = () => {
-  const { loadBooksFromLocalStorage } = useStore((state) => state)
+  const { loadBooksFromLocalStorage } = useLibraryStore((state) => state)
 
   useEffect(() => {
     loadBooksFromLocalStorage()
@@ -36,6 +37,8 @@ const App = () => {
             <Route path="/backlog" element={<PlanToReadPage />} />
             <Route path="/completed" element={<CompletedPage />} />
             <Route path="/dropped" element={<DroppedPage />} />
+            <Route path="/add" element={<AddBookPage />} />
+            <Route path="/edit/:key" element={<AddBookPage />} />
           </Routes>
         </TooltipProvider>
       </Layout>

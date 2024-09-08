@@ -12,9 +12,11 @@ import {
   TableRow,
 } from "@/components/ui/table"
 
-import { Book, useStore } from "@/store"
+import { Book, useLibraryStore } from "@/libraryStore"
 import { AiOutlineLoading3Quarters } from "react-icons/ai"
 import { SlArrowRight, SlArrowLeft } from "react-icons/sl"
+
+import { useNavigate } from "react-router-dom"
 
 type SearchResult = {
   docs: Book[]
@@ -22,7 +24,7 @@ type SearchResult = {
 }
 
 export const BookSearch = () => {
-  const { books, addBook } = useStore((state) => state)
+  const { books, addBook } = useLibraryStore((state) => state)
 
   const [query, setQuery] = useState("")
   const [results, setResults] = useState<Book[]>([])
@@ -30,6 +32,8 @@ export const BookSearch = () => {
   const [totalResults, setTotalResults] = useState(0)
   const [currentPage, setCurrentPage] = useState(1)
   const resultsPerPage = 15
+
+  const navigate = useNavigate()
 
   const searchBooks = async (page: number = 1) => {
     if (!query) return
@@ -98,10 +102,7 @@ export const BookSearch = () => {
           )}
         </Button>
 
-        <Button
-          onClick={() => console.log("Not implemented")}
-          disabled={isLoading}
-        >
+        <Button onClick={() => navigate("/add")} disabled={isLoading}>
           Create
         </Button>
       </div>
@@ -137,12 +138,17 @@ export const BookSearch = () => {
                   <Button
                     variant="secondary"
                     disabled={books.some((b) => b.key === book.key)}
-                    onClick={() =>
+                    onClick={() => {
                       addBook({
                         ...book,
                         status: "backlog",
                       })
-                    }
+                      console.log(book)
+
+                      const cleanedKey = book.key.replace("/works/", "")
+
+                      // navigate(`/edit/${cleanedKey}`)
+                    }}
                   >
                     Add
                   </Button>

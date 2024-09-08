@@ -11,9 +11,9 @@ export const BookList = () => {
       <div className="flex gap-2 max-sm:flex-col sm:items-center sm:justify-between">
         <h2 className="mb-4 text-2xl font-bold">Reading List</h2>
         <div className="h-full">
-          <AddBookDialog>
+          <AddBookDialog >
             <BookSearch />
-          </AddBookDialog>
+           </AddBookDialog>
         </div>
       </div>
 

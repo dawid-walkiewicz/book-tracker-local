@@ -1,4 +1,4 @@
-import { Book, useStore } from "@/store"
+import { Book, useLibraryStore } from "@/libraryStore"
 
 import { DragDropContext, Draggable, DropResult } from "react-beautiful-dnd"
 import { StrictModeDropable } from "./StrictModeDropable"
@@ -12,7 +12,7 @@ export const DraggableBookList = ({
   listType: Book["status"]
   quote: string
 }) => {
-  const { books, reorderBooks } = useStore((state) => state)
+  const { books, reorderBooks } = useLibraryStore((state) => state)
 
   const onDragEnd = (result: DropResult) => {
     if (!result.destination) return
