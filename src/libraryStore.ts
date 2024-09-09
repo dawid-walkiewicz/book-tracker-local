@@ -1,12 +1,26 @@
 import { create } from "zustand"
 
-export type Book = {
+export type Work = {
   key: string
   title: string
   author_name: string[]
   first_publish_year: number
-  number_of_pages_median: number | null
-  cover_i?: number
+  number_of_pages_median: number
+  cover_i: number
+  editions: string[]
+  status: "completed" | "reading" | "backlog" | "dropped"
+}
+
+export type Book = {
+  key: string
+  title: string
+  author_name: string[]
+  publish_year: number
+  publishers: string[]
+  physical_format: string
+  cover_i: number | null
+  number_of_pages: number | null
+  isbn: string[]
   status: "completed" | "reading" | "backlog" | "dropped"
 }
 
@@ -32,15 +46,18 @@ export const useLibraryStore = create<BookStore>((set) => ({
 
   addBook: (book) =>
     set((state: BookState) => {
-      const updatedBooks: Book[] = [
+      const updatedBooks = [
         ...state.books,
         {
           key: book.key,
           title: book.title,
           author_name: book.author_name,
-          first_publish_year: book.first_publish_year,
-          number_of_pages_median: book.number_of_pages_median,
+          publish_year: book.publish_year,
+          publishers: book.publishers,
+          physical_format: book.physical_format,
           cover_i: book.cover_i,
+          number_of_pages: book.number_of_pages,
+          isbn: book.isbn,
           status: book.status || "backlog",
         },
       ]
@@ -111,7 +128,16 @@ export const useLibraryStore = create<BookStore>((set) => ({
     const savedBooks = localStorage.getItem("readingList")
     const books = savedBooks ? JSON.parse(savedBooks) : []
 
-    books.find((book: Book) => book.key === key) ? books.find((book: Book) => book.key === key) : { key: "", title: "", author_name: [], first_publish_year: 0, number_of_pages_median: 0, status: "backlog" }
+    books.find((book: Book) => book.key === key)
+      ? books.find((book: Book) => book.key === key)
+      : {
+          key: "",
+          title: "",
+          author_name: [],
+          first_publish_year: 0,
+          number_of_pages_median: 0,
+          status: "backlog",
+        }
 
     return books.find((book: Book) => book.key === key)
   },
