@@ -15,11 +15,13 @@ import { BookCoverMedium } from "@/components/BookCover"
 
 export const SearchResults = ({
   query,
+  wasSearched,
   workResults,
   setIsEditionsVisible,
   searchEditions,
 }: {
   query: string
+  wasSearched: boolean
   workResults: Work[]
   setIsEditionsVisible: (value: boolean) => void
   searchEditions: (editions: string[], author: string[]) => void
@@ -77,7 +79,7 @@ export const SearchResults = ({
         </Table>
       ) : (
         <div className="flex max-h-60 items-center justify-center p-16">
-          <p className="text-gray-600 dark:text-gray-400">Start your search!</p>
+          <p className="text-gray-600 dark:text-gray-400">{wasSearched ? "Nothing found :(" : "Start your search!"}</p>
         </div>
       )}
     </div>

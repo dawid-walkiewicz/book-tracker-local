@@ -38,6 +38,7 @@ type Edition = {
 
 export const BookSearch = () => {
   const [query, setQuery] = useState("")
+  const [wasSearched, setWasSearched] = useState(false)
   const [workResults, setWorkResults] = useState<Work[]>([])
   const [isLoading, setIsLoading] = useState(false)
   const [totalWorkResults, setTotalWorkResults] = useState(0)
@@ -50,6 +51,7 @@ export const BookSearch = () => {
     if (!query) return
 
     setIsLoading(true)
+    setWasSearched(true)
 
     try {
       const response = await axios.get<SearchResult>(
@@ -151,6 +153,7 @@ export const BookSearch = () => {
           <div>
             <SearchResults
               query={query}
+              wasSearched={wasSearched}
               workResults={workResults}
               setIsEditionsVisible={setIsEditionsVisible}
               searchEditions={searchEditions}
