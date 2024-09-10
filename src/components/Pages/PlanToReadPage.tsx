@@ -1,7 +1,7 @@
 import { GiBookPile } from "react-icons/gi"
 
 import { AddBookDialog } from "@/components/AddBookDrawer"
-import { BookSearch } from "@/components/BookSearch"
+import { BookSearch } from "@/components/bookSearching/BookSearch"
 import { DraggableBookList } from "@/components/DraggableBookList"
 
 export const PlanToReadPage = () => {

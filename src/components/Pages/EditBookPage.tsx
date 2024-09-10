@@ -1,9 +1,6 @@
-import React from "react"
-
 import { useNavigate, useParams } from "react-router-dom"
 
 import { useLibraryStore } from "@/libraryStore"
-import { BookItem } from "../BookItem"
 
 export const AddBookPage = () => {
   const { key } = useParams()

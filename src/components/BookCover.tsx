@@ -1,4 +1,4 @@
-import React, { useState } from "react"
+import { useState } from "react"
 import { AiOutlineLoading3Quarters } from "react-icons/ai"
 import NotFoundImage from "@/assets/image-not-found-icon.png"
 

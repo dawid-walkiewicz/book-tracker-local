@@ -1,7 +1,7 @@
 import { TbBookOff } from "react-icons/tb";
 
 import { AddBookDialog } from "@/components/AddBookDrawer"
-import { BookSearch } from "@/components/BookSearch"
+import { BookSearch } from "@/components/bookSearching/BookSearch"
 import { DraggableBookList } from "@/components/DraggableBookList"
 
 export const DroppedPage = () => {

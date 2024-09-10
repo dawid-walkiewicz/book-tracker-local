@@ -1,7 +1,7 @@
 import { GiBookPile, GiBookshelf, GiBookmarklet } from "react-icons/gi"
 
 import { AddBookDialog } from "./AddBookDrawer"
-import { BookSearch } from "./BookSearch"
+import { BookSearch } from "./bookSearching/BookSearch"
 import { DraggableBookList } from "./DraggableBookList"
 import { TbBookOff } from "react-icons/tb"
 
