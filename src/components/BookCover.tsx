@@ -49,7 +49,7 @@ export const BookCoverLarge = ({
       <img
         src={coverId ? `https://covers.openlibrary.org/b/id/${coverId}-L.jpg` : NotFoundImage}
         alt={`Cover of ${title}`}
-        className={`mx-auto h-full w-1/2 rounded-lg object-cover sm:h-full sm:w-full sm:rounded-l-lg ${loading ? "hidden" : ""}`}
+        className={`mx-auto h-full w-1/2 rounded-lg object-cover ${coverId ? "" : "dark:invert"} sm:h-full sm:w-full sm:rounded-l-lg ${loading ? "hidden" : ""}`}
         onLoad={() => setLoading(false)}
       />
     </div>
