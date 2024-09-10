@@ -6,7 +6,7 @@ export type Work = {
   author_name: string[]
   first_publish_year: number
   number_of_pages_median: number
-  cover_i: number
+  cover_i: number | null
   editions: string[]
   status: "completed" | "reading" | "backlog" | "dropped"
 }

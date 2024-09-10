@@ -16,6 +16,8 @@ import { Book, Work, useLibraryStore } from "@/libraryStore"
 import { AiOutlineLoading3Quarters } from "react-icons/ai"
 import { SlArrowRight, SlArrowLeft } from "react-icons/sl"
 
+import { BookCoverMedium } from "./BookCover"
+
 import { useNavigate } from "react-router-dom"
 
 type SearchResult = {
@@ -29,7 +31,7 @@ type WorkResults = {
   author_name: string[]
   first_publish_year: number
   number_of_pages_median: number
-  cover_i: number
+  cover_i: number | null
   editions: { docs: { key: string }[] }
   status: "completed" | "reading" | "backlog" | "dropped"
 }
@@ -221,11 +223,7 @@ export const BookSearch = () => {
             {workResults.map((work, index) => (
               <TableRow key={index}>
                 <TableCell className="mr-0 p-2">
-                  <img
-                    src={`https://covers.openlibrary.org/b/id/${work.cover_i}-M.jpg`}
-                    alt={`Cover of ${work.title}`}
-                    className="w-20 object-cover"
-                  />
+                  <BookCoverMedium coverId={work.cover_i} title={work.title} />
                 </TableCell>
                 <TableCell className="pl-0">{work.title}</TableCell>
                 <TableCell>
@@ -329,11 +327,7 @@ export const BookSearch = () => {
             {editionResults.map((book, index) => (
               <TableRow key={index}>
                 <TableCell className="mr-0 p-2">
-                  <img
-                    src={`https://covers.openlibrary.org/b/id/${book.cover_i}-M.jpg`}
-                    alt={`Cover of ${book.title}`}
-                    className="w-20 object-cover"
-                  />
+                  <BookCoverMedium coverId={book.cover_i} title={book.title} />
                 </TableCell>
                 <TableCell className="pl-0">{book.title}</TableCell>
                 <TableCell>

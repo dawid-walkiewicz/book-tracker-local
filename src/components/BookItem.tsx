@@ -18,6 +18,8 @@ import {
   TooltipTrigger,
 } from "@/components/ui/tooltip"
 
+import { BookCoverLarge } from "./BookCover"
+
 export const BookItem = ({
   book,
   index,
@@ -39,11 +41,12 @@ export const BookItem = ({
       className="flex flex-col items-center sm:flex-row rounded-none sm:pl-2"
     >
       <div className="w-full sm:w-1/5 flex-shrink-0 p-2 justify-center">
-        <img
-          src={`https://covers.openlibrary.org/b/id/${book.cover_i}-L.jpg`}
-          alt={`Cover of ${book.title}`}
+        {/* <img
+          src={book.cover_i ? `https://covers.openlibrary.org/b/id/${book.cover_i}-L.jpg` : NotFoundImage}
+          alt={book.cover_i ? `Cover of ${book.title}` : "Cover not found"}
           className="h-full w-3/4 object-cover sm:w-full sm:h-full sm:rounded-l-lg rounded-lg mx-auto"
-        />
+        /> */}
+        <BookCoverLarge coverId={book.cover_i} title={book.title} />
       </div>
 
       <div className="flex-grow p-4 pb-0 pt-0 sm:pl-0">
