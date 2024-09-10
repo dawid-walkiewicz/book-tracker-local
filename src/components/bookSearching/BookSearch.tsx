@@ -51,7 +51,6 @@ export const BookSearch = () => {
     if (!query) return
 
     setIsLoading(true)
-    setWasSearched(true)
 
     try {
       const response = await axios.get<SearchResult>(
@@ -75,6 +74,7 @@ export const BookSearch = () => {
     }
 
     setIsLoading(false)
+    setWasSearched(true)
   }
 
   const searchEditions = async (editions: string[], authors: string[]) => {
