@@ -1,4 +1,4 @@
-import { BookCoverLarge } from "@/components/BookCover"
+import { BookCoverFile } from "@/components/BookCover"
 import { SubmitHandler, useForm } from "react-hook-form"
 import { z } from "zod"
 import { zodResolver } from "@hookform/resolvers/zod"
@@ -22,6 +22,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "./ui/select"
+import { Book } from "@/libraryStore"
 
 const currentYear = new Date().getFullYear()
 
@@ -49,18 +50,18 @@ const formSchema = z.object({
   status: z.enum(["reading", "backlog", "completed", "dropped"]),
 })
 
-export const BookEditForm = () => {
+export const BookEditForm = ({ book }: { book: Book | null }) => {
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
-      title: "",
-      author_name: "",
-      publish_year: null,
-      publishers: "",
-      format: "",
+      title: book?.title || "",
+      author_name: book?.author_name.join(", ") || "",
+      publish_year: book?.publish_year || null,
+      publishers: book?.publishers.join(", ") || "",
+      format: book?.format || "",
       cover: null,
-      number_of_pages: null,
-      isbn: null,
+      number_of_pages: book?.number_of_pages || null,
+      isbn: book?.isbn || "",
       status: "backlog",
     },
     mode: "onChange",
@@ -75,7 +76,10 @@ export const BookEditForm = () => {
   const handleCoverChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files?.[0] || null
     form.setValue("cover", file)
+    form.trigger("cover")
   }
+
+  const coverFile = form.watch("cover")
 
   return (
     <Form {...form}>
@@ -83,17 +87,24 @@ export const BookEditForm = () => {
         <Card className="w-full divide-y divide-muted">
           <CardContent className="flex justify-evenly pb-4 pt-4">
             <div className="flex w-1/4 flex-col justify-center">
-              <BookCoverLarge coverId={null} title="" />
+              <BookCoverFile file={coverFile} title="" />
 
-              <FormItem>
-                <FormControl>
-                  <Input
-                    type="file"
-                    placeholder="Cover"
-                    onChange={handleCoverChange}
-                  />
-                </FormControl>
-              </FormItem>
+              <FormField
+                name="cover"
+                control={form.control}
+                render={({ field }) => (
+                  <FormItem className="pt-2">
+                    <FormControl>
+                      <Input
+                        type="file"
+                        placeholder="Cover"
+                        onChange={handleCoverChange} // Zmiennik pliku
+                      />
+                    </FormControl>
+                    <FormMessage /> {/* Wyświetl komunikat o błędzie */}
+                  </FormItem>
+                )}
+              />
             </div>
 
             <div className="flex flex-col">

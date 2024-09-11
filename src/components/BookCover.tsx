@@ -55,3 +55,30 @@ export const BookCoverLarge = ({
     </div>
   )
 }
+
+export const BookCoverFile = ({
+  file: file,
+  title,
+}: {
+  file: File | null
+  title: string
+}) => {
+  const [loading, setLoading] = useState(true)
+
+  return (
+    <div className="relative">
+      {loading && (
+        <div className="inset-0 flex items-center justify-center">
+        {" "}
+        <AiOutlineLoading3Quarters className="size-16 animate-spin text-gray-900" />
+      </div>
+      )}
+      <img
+        src={file ? URL.createObjectURL(file) : NotFoundImage}
+        alt={`Cover of ${title}`}
+        className={`mx-auto h-full w-1/2 rounded-lg object-cover ${file ? "" : "dark:invert"} sm:h-full sm:w-full sm:rounded-l-lg ${loading ? "hidden" : ""}`}
+        onLoad={() => setLoading(false)}
+      />
+    </div>
+  )
+}
