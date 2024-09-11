@@ -12,6 +12,7 @@ import {
 import { BookCoverMedium } from "@/components/BookCover"
 
 import { Book, useLibraryStore } from "@/libraryStore"
+import { useNavigate } from "react-router-dom"
 
 export const EditionsList = ({
   query,
@@ -24,6 +25,8 @@ export const EditionsList = ({
   setEditionResults: (value: Book[]) => void
   setIsEditionsVisible: (value: boolean) => void
 }) => {
+  const navigate = useNavigate()
+
   const { books, addBook } = useLibraryStore((state) => state)
 
   return (
@@ -73,9 +76,9 @@ export const EditionsList = ({
                       setIsEditionsVisible(false)
                       setEditionResults([])
 
-                      // const cleanedKey = work.key.replace("/books/", "")
+                      const cleanedKey = book.key.replace("/books/", "")
 
-                      // navigate(`/edit/${cleanedKey}`)
+                      navigate(`/edit/${cleanedKey}`)
                     }}
                   >
                     Add

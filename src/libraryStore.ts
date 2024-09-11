@@ -17,10 +17,10 @@ export type Book = {
   author_name: string[]
   publish_year: number
   publishers: string[]
-  physical_format: string
+  format: string
   cover_i: number | null
   number_of_pages: number | null
-  isbn: string[]
+  isbn: string
   status: "completed" | "reading" | "backlog" | "dropped"
 }
 
@@ -39,6 +39,7 @@ interface BookStore extends BookState {
     endIndex: number,
   ) => void
   getBook: (key: string) => Book
+  editBook: (book: Book) => void
 }
 
 export const useLibraryStore = create<BookStore>((set) => ({
@@ -54,7 +55,7 @@ export const useLibraryStore = create<BookStore>((set) => ({
           author_name: book.author_name,
           publish_year: book.publish_year,
           publishers: book.publishers,
-          physical_format: book.physical_format,
+          format: book.format,
           cover_i: book.cover_i,
           number_of_pages: book.number_of_pages,
           isbn: book.isbn,
@@ -141,4 +142,15 @@ export const useLibraryStore = create<BookStore>((set) => ({
 
     return books.find((book: Book) => book.key === key)
   },
+
+  editBook: (book) =>
+    set((state: BookState) => {
+      const updatedBooks = state.books.map((b) =>
+        b.key === book.key ? book : b,
+      )
+
+      localStorage.setItem("readingList", JSON.stringify(updatedBooks))
+
+      return { books: updatedBooks }
+    }),
 }))

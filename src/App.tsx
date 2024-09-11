@@ -10,7 +10,7 @@ import { ReadingPage } from "./components/Pages/ReadingPage"
 import { PlanToReadPage } from "./components/Pages/PlanToReadPage"
 import { CompletedPage } from "./components/Pages/CompletedPage"
 import { DroppedPage } from "./components/Pages/DroppedPage"
-import { AddBookPage } from "./components/Pages/EditBookPage"
+import { EditBookPage } from "./components/Pages/EditBookPage"
 
 export const navigation = [
   { name: "Home", href: "/", current: true },
@@ -37,8 +37,8 @@ const App = () => {
             <Route path="/backlog" element={<PlanToReadPage />} />
             <Route path="/completed" element={<CompletedPage />} />
             <Route path="/dropped" element={<DroppedPage />} />
-            <Route path="/add" element={<AddBookPage />} />
-            <Route path="/edit/:key" element={<AddBookPage />} />
+            <Route path="/add" element={<EditBookPage />} />
+            <Route path="/edit/:key" element={<EditBookPage />} />
           </Routes>
         </TooltipProvider>
       </Layout>
