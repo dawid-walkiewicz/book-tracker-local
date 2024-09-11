@@ -46,7 +46,6 @@ const formSchema = z.object({
     )
     .nullable(),
   number_of_pages: z.number().nullable(),
-  isbn: z.string().nullable(),
   status: z.enum(["reading", "backlog", "completed", "dropped"]),
 })
 
@@ -61,7 +60,6 @@ export const BookEditForm = ({ book }: { book: Book | null }) => {
       format: book?.format || "",
       cover: null,
       number_of_pages: book?.number_of_pages || null,
-      isbn: book?.isbn || "",
       status: "backlog",
     },
     mode: "onChange",
@@ -215,23 +213,6 @@ export const BookEditForm = ({ book }: { book: Book | null }) => {
                           <FloatingLabelInput
                             type="string"
                             label="Format"
-                            {...field}
-                            value={field.value || ""}
-                          />
-                        </FormControl>
-                      </FormItem>
-                    )}
-                  />
-
-                  <FormField
-                    name="isbn"
-                    control={form.control}
-                    render={({ field }) => (
-                      <FormItem className="max-w-fit">
-                        <FormControl>
-                          <FloatingLabelInput
-                            type="string"
-                            label="ISBN number"
                             {...field}
                             value={field.value || ""}
                           />

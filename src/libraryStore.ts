@@ -20,7 +20,6 @@ export type Book = {
   format: string
   cover_i: number | null
   number_of_pages: number | null
-  isbn: string
   status: "completed" | "reading" | "backlog" | "dropped"
 }
 

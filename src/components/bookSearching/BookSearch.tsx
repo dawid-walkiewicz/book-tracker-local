@@ -90,6 +90,8 @@ export const BookSearch = () => {
 
         if (response.data.covers) {
           for (const cover of response.data.covers) {
+            console.log(response.data)
+
             setEditionResults((prev) => [
               ...prev,
               {
@@ -101,7 +103,6 @@ export const BookSearch = () => {
                 format: response.data.physical_format,
                 cover_i: cover,
                 number_of_pages: response.data.number_of_pages,
-                isbn: response.data.isbn[0],
                 status: "backlog",
               },
             ])
@@ -118,7 +119,6 @@ export const BookSearch = () => {
               format: response.data.physical_format,
               cover_i: null,
               number_of_pages: response.data.number_of_pages,
-              isbn: response.data.isbn[0],
               status: "backlog",
             },
           ])
