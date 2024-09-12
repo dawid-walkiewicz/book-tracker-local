@@ -37,7 +37,7 @@ export const EditionsList = ({
             <TableRow>
               <TableHead></TableHead>
               <TableHead>Title</TableHead>
-              <TableHead>Author</TableHead>
+              <TableHead className="hidden sm:table-cell">Author</TableHead>
               <TableHead>Publishers</TableHead>
               <TableHead className="hidden sm:table-cell">Year</TableHead>{" "}
               <TableHead className="hidden sm:table-cell">Page Count</TableHead>
@@ -51,7 +51,7 @@ export const EditionsList = ({
                   <BookCoverMedium coverId={book.cover_i} title={book.title} />
                 </TableCell>
                 <TableCell className="pl-0">{book.title}</TableCell>
-                <TableCell>
+                <TableCell className="hidden sm:table-cell">
                   {book.author_name ? book.author_name.join(", ") : ""}
                 </TableCell>
                 <TableCell>
