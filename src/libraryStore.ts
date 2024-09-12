@@ -15,9 +15,9 @@ export type Book = {
   key: string
   title: string
   author_name: string[]
-  publish_year: number
-  publishers: string[]
-  format: string
+  publish_year: number | null
+  publishers: string[] | null
+  format: string | null
   cover_i: number | null
   number_of_pages: number | null
   status: "completed" | "reading" | "backlog" | "dropped"
@@ -37,7 +37,7 @@ interface BookStore extends BookState {
     startIndex: number,
     endIndex: number,
   ) => void
-  getBook: (key: string) => Book
+  getBook: (key: string) => Book | null
   editBook: (book: Book) => void
 }
 
@@ -57,7 +57,6 @@ export const useLibraryStore = create<BookStore>((set) => ({
           format: book.format,
           cover_i: book.cover_i,
           number_of_pages: book.number_of_pages,
-          isbn: book.isbn,
           status: book.status || "backlog",
         },
       ]
@@ -124,22 +123,15 @@ export const useLibraryStore = create<BookStore>((set) => ({
     }
   },
 
-  getBook: (key) => {
-    const savedBooks = localStorage.getItem("readingList")
-    const books = savedBooks ? JSON.parse(savedBooks) : []
-
-    books.find((book: Book) => book.key === key)
-      ? books.find((book: Book) => book.key === key)
-      : {
-          key: "",
-          title: "",
-          author_name: [],
-          first_publish_year: 0,
-          number_of_pages_median: 0,
-          status: "backlog",
-        }
-
-    return books.find((book: Book) => book.key === key)
+  getBook: (key: string) => {
+    const savedBooks = localStorage.getItem("readingList");
+    const books: Book[] = savedBooks ? JSON.parse(savedBooks) : [];
+  
+    const foundBook = books.find((book: Book) => book.key === `/books/${key}`);
+  
+    return (
+      foundBook || null
+    );
   },
 
   editBook: (book) =>

@@ -28,7 +28,7 @@ type Edition = {
   key: string
   title: string
   author_name: string[]
-  publish_date: number
+  publish_date: string
   publishers: string[]
   physical_format: string
   covers: number[] | null
@@ -77,10 +77,19 @@ export const BookSearch = () => {
     setWasSearched(true)
   }
 
+  function extractYear(publishYear: string | null | undefined): number | null {
+    if (!publishYear) return null
+  
+    const match = publishYear.match(/\b\d{4}\b/)
+    if (match) {
+      return parseInt(match[0], 10)
+    }
+  
+    return null
+  }
+
   const searchEditions = async (editions: string[], authors: string[]) => {
     if (editions.length === 0) return
-
-    console.log(editions)
 
     try {
       for (const edition of editions) {
@@ -98,7 +107,7 @@ export const BookSearch = () => {
                 key: response.data.key,
                 title: response.data.title,
                 author_name: authors,
-                publish_year: response.data.publish_date,
+                publish_year: extractYear(response.data.publish_date),
                 publishers: response.data.publishers,
                 format: response.data.physical_format,
                 cover_i: cover,
@@ -114,7 +123,7 @@ export const BookSearch = () => {
               key: response.data.key,
               title: response.data.title,
               author_name: authors,
-              publish_year: response.data.publish_date,
+              publish_year: extractYear(response.data.publish_date),
               publishers: response.data.publishers,
               format: response.data.physical_format,
               cover_i: null,
