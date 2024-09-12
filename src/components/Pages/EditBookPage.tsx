@@ -10,9 +10,16 @@ export const EditBookPage = () => {
   const { key } = useParams()
   const navigate = useNavigate()
 
-  const { getBook } = useLibraryStore((state) => state)
+  const { getBook, editBook, addBook } = useLibraryStore((state) => state)
 
-  const book = getBook(key ? key : "")
+  const [book, setBook] = useState<Book | null>(null)
+
+  useEffect(() => {
+    if (key) {
+      const fetchedBook = getBook(key);
+      setBook(fetchedBook);
+    }
+  }, [key, book])
 
   return (
     <div>
@@ -24,7 +31,7 @@ export const EditBookPage = () => {
         )}
         <GiQuillInk className="size-8"/>
       </div>
-      <BookEditForm book={book} />
+      {book && (<BookEditForm book={book} doOnSubmit={ key ? editBook : addBook} />)}
     </div>
   )
 }

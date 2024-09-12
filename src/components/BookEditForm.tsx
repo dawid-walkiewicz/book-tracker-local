@@ -23,6 +23,9 @@ import {
   SelectValue,
 } from "./ui/select"
 import { Book } from "@/libraryStore"
+import { useEffect, useMemo } from "react"
+
+import { useNavigate } from "react-router-dom"
 
 const currentYear = new Date().getFullYear()
 
@@ -44,19 +47,28 @@ const formSchema = z.object({
         file === null || ["image/jpeg", "image/png"].includes(file.type),
       { message: "The cover must be a valid image file (jpeg, png)." },
     )
+    .optional()
     .nullable(),
   number_of_pages: z.number().nullable(),
   status: z.enum(["reading", "backlog", "completed", "dropped"]),
 })
 
-export const BookEditForm = ({ book }: { book: Book | null }) => {
+export const BookEditForm = ({
+  book,
+  doOnSubmit,
+}: {
+  book: Book | null
+  doOnSubmit: (book: Book) => void
+}) => {
+  const navigate = useNavigate()
+
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
       title: book?.title || "",
       author_name: book?.author_name.join(", ") || "",
       publish_year: book?.publish_year || null,
-      publishers: book?.publishers.join(", ") || "",
+      publishers: book?.publishers?.join(", ") || "",
       format: book?.format || "",
       cover: null,
       number_of_pages: book?.number_of_pages || null,
@@ -69,6 +81,38 @@ export const BookEditForm = ({ book }: { book: Book | null }) => {
     values: z.infer<typeof formSchema>,
   ) => {
     console.log(values)
+
+    let editedBook: Book
+
+    if (book === null) {
+      editedBook = {
+        key: "123",
+        title: values.title,
+        author_name: values.author_name.split(", "),
+        publish_year: values.publish_year,
+        publishers: values.publishers ? values.publishers.split(", ") : [],
+        format: values.format,
+        cover_i: null,
+        number_of_pages: values.number_of_pages,
+        status: values.status,
+      }
+    } else {
+      editedBook = {
+        key: book.key,
+        title: values.title,
+        author_name: values.author_name.split(", "),
+        publish_year: values.publish_year,
+        publishers: values.publishers ? values.publishers.split(", ") : [],
+        format: values.format,
+        cover_i: book.cover_i,
+        number_of_pages: values.number_of_pages,
+        status: values.status,
+      }
+    }
+
+    doOnSubmit(editedBook)
+
+    navigate(-1)
   }
 
   const handleCoverChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -85,7 +129,7 @@ export const BookEditForm = ({ book }: { book: Book | null }) => {
         <Card className="w-full divide-y divide-muted">
           <CardContent className="flex justify-evenly pb-4 pt-4">
             <div className="flex w-1/4 flex-col justify-center">
-              <BookCoverFile file={coverFile} title="" />
+              <BookCoverFile file={coverFile || null} title="" />
 
               <FormField
                 name="cover"
@@ -96,10 +140,10 @@ export const BookEditForm = ({ book }: { book: Book | null }) => {
                       <Input
                         type="file"
                         placeholder="Cover"
-                        onChange={handleCoverChange} // Zmiennik pliku
+                        onChange={handleCoverChange}
                       />
                     </FormControl>
-                    <FormMessage /> {/* Wyświetl komunikat o błędzie */}
+                    <FormMessage />
                   </FormItem>
                 )}
               />
@@ -255,7 +299,13 @@ export const BookEditForm = ({ book }: { book: Book | null }) => {
             </div>
           </CardContent>
           <CardFooter className="flex justify-center gap-6 pt-4">
-            <Button variant="outline">Cancel</Button>
+            <Button
+              type="button"
+              variant="outline"
+              onClick={() => navigate(-1)}
+            >
+              Cancel
+            </Button>
             <Button
               type="button"
               disabled={!form.formState.isValid}
