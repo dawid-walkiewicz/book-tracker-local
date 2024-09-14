@@ -36,6 +36,7 @@ import {
 import { Book } from "@/libraryStore"
 
 import { useNavigate } from "react-router-dom"
+import { useEffect } from "react"
 
 const currentYear = new Date().getFullYear()
 
@@ -89,6 +90,10 @@ export const BookEditForm = ({
     mode: "onChange",
   })
 
+  useEffect(() => {
+    form.trigger()
+  }, [book])
+
   const onSubmit: SubmitHandler<z.infer<typeof formSchema>> = (
     values: z.infer<typeof formSchema>,
   ) => {
@@ -124,7 +129,7 @@ export const BookEditForm = ({
 
     doOnSubmit(editedBook)
 
-    navigate(-1)
+    navigate(`/${editedBook.status}`)
   }
 
   const handleCoverChange = (event: React.ChangeEvent<HTMLInputElement>) => {
