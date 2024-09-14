@@ -1,4 +1,4 @@
-import { useNavigate, useParams } from "react-router-dom"
+import { useParams } from "react-router-dom"
 
 import { Book, useLibraryStore } from "@/libraryStore"
 import { useEffect, useState } from "react"
@@ -8,7 +8,6 @@ import { GiQuillInk } from "react-icons/gi";
 
 export const EditBookPage = () => {
   const { key } = useParams()
-  const navigate = useNavigate()
 
   const { getBook, editBook, addBook } = useLibraryStore((state) => state)
 

@@ -1,5 +1,5 @@
 import { BookCoverFile } from "@/components/BookCover"
-import { SubmitHandler, useForm } from "react-hook-form"
+import { set, SubmitHandler, useForm } from "react-hook-form"
 import { z } from "zod"
 import { zodResolver } from "@hookform/resolvers/zod"
 
@@ -14,16 +14,26 @@ import {
 import { Input } from "@/components/ui/input"
 
 import { Card, CardContent, CardFooter } from "@/components/ui/card"
-import { FloatingLabelInput } from "./ui/floating-label-input"
+import { FloatingLabelInput } from "@/components/ui/floating-label-input"
 import {
   Select,
   SelectContent,
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from "./ui/select"
+} from "@/components/ui/select"
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+  AlertDialogTrigger,
+} from "@/components/ui/alert-dialog"
 import { Book } from "@/libraryStore"
-import { useEffect, useMemo } from "react"
 
 import { useNavigate } from "react-router-dom"
 
@@ -62,18 +72,20 @@ export const BookEditForm = ({
 }) => {
   const navigate = useNavigate()
 
+  const initialValues = {
+    title: book?.title || "",
+    author_name: book?.author_name.join(", ") || "",
+    publish_year: book?.publish_year || null,
+    publishers: book?.publishers?.join(", ") || "",
+    format: book?.format || "",
+    cover: null,
+    number_of_pages: book?.number_of_pages || null,
+    status: book?.status || "backlog",
+  }
+
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
-    defaultValues: {
-      title: book?.title || "",
-      author_name: book?.author_name.join(", ") || "",
-      publish_year: book?.publish_year || null,
-      publishers: book?.publishers?.join(", ") || "",
-      format: book?.format || "",
-      cover: null,
-      number_of_pages: book?.number_of_pages || null,
-      status: "backlog",
-    },
+    defaultValues: initialValues,
     mode: "onChange",
   })
 
@@ -299,13 +311,26 @@ export const BookEditForm = ({
             </div>
           </CardContent>
           <CardFooter className="flex justify-center gap-6 pt-4">
-            <Button
-              type="button"
-              variant="outline"
-              onClick={() => navigate(-1)}
-            >
-              Cancel
-            </Button>
+            <AlertDialog>
+              <AlertDialogTrigger asChild>
+                <Button variant="outline">Cancel</Button>
+              </AlertDialogTrigger>
+              <AlertDialogContent>
+                <AlertDialogHeader>
+                  <AlertDialogTitle>Are you absolutely sure?</AlertDialogTitle>
+                  <AlertDialogDescription>
+                    You will loose all the changes made to the book.
+                  </AlertDialogDescription>
+                </AlertDialogHeader>
+                <AlertDialogFooter>
+                  <AlertDialogCancel>Go back</AlertDialogCancel>
+                  <AlertDialogAction onClick={() => navigate(-1)}>
+                    Cancel
+                  </AlertDialogAction>
+                </AlertDialogFooter>
+              </AlertDialogContent>
+            </AlertDialog>
+
             <Button
               type="button"
               disabled={!form.formState.isValid}
