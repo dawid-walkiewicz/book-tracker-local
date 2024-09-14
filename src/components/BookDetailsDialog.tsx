@@ -11,9 +11,9 @@ import { Book } from "@/libraryStore"
 import { GiBookPile, GiBookshelf, GiBookmarklet } from "react-icons/gi"
 import { TbBookOff } from "react-icons/tb"
 
-import * as VisuallyHidden from '@radix-ui/react-visually-hidden';
+import * as VisuallyHidden from "@radix-ui/react-visually-hidden"
 
-export default () => <VisuallyHidden.Root/>
+export default () => <VisuallyHidden.Root />
 
 import { useNavigate } from "react-router-dom"
 import { DialogDescription } from "@radix-ui/react-dialog"
@@ -33,7 +33,7 @@ export const BookDetailsDialog = ({
         return (
           <div className="flex items-center gap-2">
             <GiBookmarklet className="size-6" />{" "}
-            <p className="text-xl text-green-600">Currently reading</p>
+            <p className="text-xl text-yellow-400">Currently reading</p>
           </div>
         )
       case "backlog":
@@ -47,14 +47,14 @@ export const BookDetailsDialog = ({
         return (
           <div className="flex items-center gap-2">
             <GiBookshelf className="size-6" />
-            <p className="text-xl">Completed</p>
+            <p className="text-xl text-green-800">Completed</p>
           </div>
         )
       case "dropped":
         return (
           <div className="flex items-center gap-2">
             <TbBookOff className="size-6" />
-            <p className="text-xl">Dropped</p>
+            <p className="text-xl text-red-600">Dropped</p>
           </div>
         )
       default:
@@ -65,7 +65,7 @@ export const BookDetailsDialog = ({
   return (
     <Dialog>
       <DialogTrigger asChild>{children}</DialogTrigger>
-      <DialogContent className="sm:max-w-2xl">
+      <DialogContent className="sm:min-h-[300px] sm:max-w-2xl">
         <DialogHeader>
           <DialogTitle>
             <VisuallyHidden.Root>Book details</VisuallyHidden.Root>
@@ -77,28 +77,26 @@ export const BookDetailsDialog = ({
           </DialogDescription>
         </DialogHeader>
 
-        <div className="flex justify-evenly pb-4 pt-4">
-          <div className="flex w-1/3 flex-col justify-center">
-            <BookCoverLarge coverId={book.cover_i} title="" />
+        <div className="flex flex-col sm:flex-row sm:justify-evenly">
+          <div className="w-full sm:w-1/3 justify-center">
+            <BookCoverLarge coverId={book.cover_i} title="Cover" />
           </div>
 
-          <div className="flex flex-col justify-around">
-            <div className="pb-4">
-              <h2 className="text-4xl font-bold">{book.title}</h2>
+          <div className="flex flex-col justify-around items-center text-center gap-4 sm:items-start sm:text-left sm:gap-0">
+            <div className="flex flex-col">
+              <h2 className="text-3xl font-bold sm:text-4xl">{book.title}</h2>
               <h3 className="text-2xl font-semibold">
                 {book.author_name.join(", ")}
               </h3>
             </div>
+
+            {readingStatus(book.status)}
 
             <div className="flex flex-col gap-1">
               <p>Publisher(s): {book.publishers?.join(", ")}</p>
               <p>Published year: {book.publish_year}</p>
               <p>Number of pages: {book.number_of_pages || "-"}</p>
               <p>Format: {book.format}</p>
-            </div>
-
-            <div className="flex justify-center">
-              {readingStatus(book.status)}
             </div>
 
             <Button
