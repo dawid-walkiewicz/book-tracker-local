@@ -68,15 +68,15 @@ export const EditionsList = ({
                     variant="secondary"
                     disabled={books.some((b) => b.key === book.key)}
                     onClick={() => {
+                      const cleanedKey = book.key.replace("/books/", "")
                       addBook({
                         ...book,
+                        key: cleanedKey,
                         status: "backlog",
                       })
                       console.log(book)
                       setIsEditionsVisible(false)
                       setEditionResults([])
-
-                      const cleanedKey = book.key.replace("/books/", "")
 
                       navigate(`/edit/${cleanedKey}`)
                     }}

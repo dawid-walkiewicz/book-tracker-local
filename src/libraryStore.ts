@@ -127,7 +127,7 @@ export const useLibraryStore = create<BookStore>((set) => ({
     const savedBooks = localStorage.getItem("readingList");
     const books: Book[] = savedBooks ? JSON.parse(savedBooks) : [];
   
-    const foundBook = books.find((book: Book) => book.key === `/books/${key}`);
+    const foundBook = books.find((book: Book) => book.key === key);
   
     return (
       foundBook || null
