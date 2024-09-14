@@ -18,7 +18,7 @@ export const EditBookPage = () => {
       const fetchedBook = getBook(key);
       setBook(fetchedBook);
     }
-  }, [key, book])
+  }, [key])
 
   return (
     <div>
