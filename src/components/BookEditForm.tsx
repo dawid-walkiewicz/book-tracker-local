@@ -147,15 +147,15 @@ export const BookEditForm = ({
     <Form {...form}>
       <form onSubmit={form.handleSubmit(onSubmit)}>
         <Card className="w-full divide-y divide-muted">
-          <CardContent className="flex justify-evenly pb-4 pt-4">
-            <div className="flex w-1/4 flex-col justify-center">
+          <CardContent className="flex flex-col pb-4 pt-4 sm:flex-row sm:justify-evenly">
+            <div className="flex flex-col items-center justify-center pb-4 sm:w-1/4 sm:pb-0">
               <BookCoverFile file={coverFile || null} title="" />
 
               <FormField
                 name="cover"
                 control={form.control}
                 render={() => (
-                  <FormItem className="pt-2">
+                  <FormItem className="w-3/4 pt-2 sm:w-fit">
                     <FormControl>
                       <Input
                         type="file"
@@ -171,7 +171,7 @@ export const BookEditForm = ({
 
             <div className="flex flex-col">
               <h3 className="pb-4 text-2xl font-semibold">Basic information</h3>
-              <div className="flex w-full items-stretch gap-8 pb-4 pl-4">
+              <div className="flex flex-col items-stretch gap-4 pb-4 sm:flex-row sm:gap-8 sm:pl-4">
                 <FormField
                   name="title"
                   control={form.control}
@@ -202,7 +202,7 @@ export const BookEditForm = ({
               <h3 className="pb-4 text-xl font-semibold">
                 Additional information (Optional)
               </h3>
-              <div className="flex flex-col gap-4 pb-4 pl-4">
+              <div className="flex flex-col gap-4 pb-4 sm:pl-4">
                 <FormField
                   name="publishers"
                   control={form.control}
@@ -220,12 +220,12 @@ export const BookEditForm = ({
                   )}
                 />
 
-                <div className="flex justify-between">
+                <div className="sm:flex sm:justify-between">
                   <FormField
                     name="publish_year"
                     control={form.control}
                     render={({ field }) => (
-                      <FormItem>
+                      <FormItem className="pb-4 sm:pb-0">
                         <FormControl>
                           <FloatingLabelInput
                             type="number"
@@ -267,29 +267,27 @@ export const BookEditForm = ({
                   />
                 </div>
 
-                <div className="flex justify-between">
-                  <FormField
-                    name="format"
-                    control={form.control}
-                    render={({ field }) => (
-                      <FormItem className="max-w-fit">
-                        <FormControl>
-                          <FloatingLabelInput
-                            type="string"
-                            label="Format"
-                            {...field}
-                            value={field.value || ""}
-                          />
-                        </FormControl>
-                      </FormItem>
-                    )}
-                  />
-                </div>
+                <FormField
+                  name="format"
+                  control={form.control}
+                  render={({ field }) => (
+                    <FormItem className="max-w-fit">
+                      <FormControl>
+                        <FloatingLabelInput
+                          type="string"
+                          label="Format"
+                          {...field}
+                          value={field.value || ""}
+                        />
+                      </FormControl>
+                    </FormItem>
+                  )}
+                />
               </div>
 
               <h3 className="pb-4 text-xl font-semibold">Reading status</h3>
 
-              <div className="pl-4">
+              <div className="sm:pl-4">
                 <FormField
                   control={form.control}
                   name="status"
