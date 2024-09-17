@@ -15,9 +15,10 @@ export const EditBookPage = () => {
 
   useEffect(() => {
     if (key) {
-      const fetchedBook = getBook(key);
-      setBook(fetchedBook);
+      const fetchedBook = getBook(key)
+      setBook(fetchedBook)
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [key])
 
   return (
@@ -30,7 +31,7 @@ export const EditBookPage = () => {
         )}
         <GiQuillInk className="size-8"/>
       </div>
-      {book && (<BookEditForm book={book} doOnSubmit={ key ? editBook : addBook} />)}
+      {(book || key === undefined ) && (<BookEditForm book={book} doOnSubmit={ key ? editBook : addBook} />)}
     </div>
   )
 }

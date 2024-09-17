@@ -1,5 +1,5 @@
 import { BookCoverFile } from "@/components/BookCover"
-import { set, SubmitHandler, useForm } from "react-hook-form"
+import { SubmitHandler, useForm } from "react-hook-form"
 import { z } from "zod"
 import { zodResolver } from "@hookform/resolvers/zod"
 
@@ -91,7 +91,10 @@ export const BookEditForm = ({
   })
 
   useEffect(() => {
-    form.trigger()
+    if (book) {
+      form.trigger()
+    }
+    // eslint-disable-next-line
   }, [book])
 
   const onSubmit: SubmitHandler<z.infer<typeof formSchema>> = (
@@ -151,7 +154,7 @@ export const BookEditForm = ({
               <FormField
                 name="cover"
                 control={form.control}
-                render={({ field }) => (
+                render={() => (
                   <FormItem className="pt-2">
                     <FormControl>
                       <Input
