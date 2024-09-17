@@ -7,22 +7,22 @@ import {
   DialogTrigger,
 } from "@/components/ui/dialog"
 import { BookCoverLarge } from "./BookCover"
-import { Book } from "@/libraryStore"
+import { Book, Series } from "@/libraryStore"
 import { GiBookPile, GiBookshelf, GiBookmarklet } from "react-icons/gi"
 import { TbBookOff } from "react-icons/tb"
 
 import * as VisuallyHidden from "@radix-ui/react-visually-hidden"
-
-export default () => <VisuallyHidden.Root />
 
 import { useNavigate } from "react-router-dom"
 import { DialogDescription } from "@radix-ui/react-dialog"
 
 export const BookDetailsDialog = ({
   book,
+  series,
   children,
 }: {
   book: Book
+  series: Series | null
   children: React.ReactNode
 }) => {
   const navigate = useNavigate()
@@ -72,17 +72,18 @@ export const BookDetailsDialog = ({
           </DialogTitle>
           <DialogDescription>
             <VisuallyHidden.Root>
-              Details of {book.title} by {book.author_name ? book.author_name.join(", ") : "-"}
+              Details of {book.title} by{" "}
+              {book.author_name ? book.author_name.join(", ") : "-"}
             </VisuallyHidden.Root>
           </DialogDescription>
         </DialogHeader>
 
-        <div className="flex flex-col sm:flex-row sm:justify-evenly">
-          <div className="w-full sm:w-1/3 justify-center">
+        <div className="flex flex-col sm:flex-row sm:justify-evenly sm:min-h-72">
+          <div className="w-full justify-center sm:w-1/3">
             <BookCoverLarge coverId={book.cover_i} title="Cover" />
           </div>
 
-          <div className="flex flex-col justify-around items-center text-center gap-4 sm:items-start sm:text-left sm:gap-0">
+          <div className="flex flex-col items-center justify-around gap-4 text-center sm:items-start sm:gap-0 sm:text-left">
             <div className="flex flex-col">
               <h2 className="text-3xl font-bold sm:text-4xl">{book.title}</h2>
               <h3 className="text-2xl font-semibold">
@@ -94,6 +95,11 @@ export const BookDetailsDialog = ({
 
             <div className="flex flex-col gap-1">
               <p>Publisher(s): {book.publishers?.join(", ")}</p>
+              {series && (
+                <p>
+                  Series: {series.name || "-"} {book.series_position ? ` #${book.series_position}` : ""}
+                </p>
+              )}
               <p>Published year: {book.publish_year}</p>
               <p>Number of pages: {book.number_of_pages || "-"}</p>
               <p>Format: {book.format}</p>

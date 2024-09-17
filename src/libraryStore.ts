@@ -11,6 +11,11 @@ export type Work = {
   status: "completed" | "reading" | "backlog" | "dropped"
 }
 
+export type Series = {
+  key: string,
+  name: string,
+}
+
 export type Book = {
   key: string
   title: string
@@ -20,15 +25,19 @@ export type Book = {
   format: string | null
   cover_i: number | null
   number_of_pages: number | null
+  series: string | null
+  series_position: number | null
   status: "completed" | "reading" | "backlog" | "dropped"
 }
 
 interface BookState {
-  books: Book[]
+  books: Book[],
+  series: Series[],
 }
 
 interface BookStore extends BookState {
   addBook: (book: Book) => void
+  addSeries: (series: Series) => void
   removeBook: (book: Book) => void
   moveBook: (book: Book, newStatus: Book["status"]) => void
   loadBooksFromLocalStorage: () => void
@@ -43,6 +52,7 @@ interface BookStore extends BookState {
 
 export const useLibraryStore = create<BookStore>((set) => ({
   books: [],
+  series: [],
 
   addBook: (book) =>
     set((state: BookState) => {
@@ -57,6 +67,8 @@ export const useLibraryStore = create<BookStore>((set) => ({
           format: book.format,
           cover_i: book.cover_i,
           number_of_pages: book.number_of_pages,
+          series: book.series || null,
+          series_position: book.series_position || null,
           status: book.status || "backlog",
         },
       ]
@@ -64,6 +76,21 @@ export const useLibraryStore = create<BookStore>((set) => ({
       localStorage.setItem("readingList", JSON.stringify(updatedBooks))
 
       return { books: updatedBooks }
+    }),
+
+  addSeries: (series) =>
+    set((state: BookState) => {
+      const updatedSeries = [
+        ...state.series,
+        {
+          key: series.key,
+          name: series.name,
+        },
+      ]
+
+      localStorage.setItem("seriesList", JSON.stringify(updatedSeries))
+
+      return { series: updatedSeries }
     }),
 
   removeBook: (bookToRemove) =>

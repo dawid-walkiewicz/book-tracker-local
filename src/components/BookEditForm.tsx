@@ -33,10 +33,13 @@ import {
   AlertDialogTitle,
   AlertDialogTrigger,
 } from "@/components/ui/alert-dialog"
-import { Book } from "@/libraryStore"
+import { Book, useLibraryStore } from "@/libraryStore"
 
 import { useNavigate } from "react-router-dom"
-import { useEffect } from "react"
+import React, { useEffect } from "react"
+import {
+  ComboboxWithCreate,
+} from "@/components/ui/combobox-create.tsx"
 
 const currentYear = new Date().getFullYear()
 
@@ -61,6 +64,12 @@ const formSchema = z.object({
     .optional()
     .nullable(),
   number_of_pages: z.number().nullable(),
+  series: z.string().nullable(),
+  series_position: z
+    .number()
+    .positive("Must be > 0")
+    .multipleOf(0.1, "Only 1 decimal place")
+    .nullable(),
   status: z.enum(["reading", "backlog", "completed", "dropped"]),
 })
 
@@ -73,6 +82,8 @@ export const BookEditForm = ({
 }) => {
   const navigate = useNavigate()
 
+  const { series, addSeries } = useLibraryStore((state) => state)
+
   const initialValues = {
     title: book?.title || "",
     author_name: book?.author_name ? book.author_name.join(", ") : "",
@@ -81,6 +92,8 @@ export const BookEditForm = ({
     format: book?.format || "",
     cover: null,
     number_of_pages: book?.number_of_pages || null,
+    series: book?.series || "",
+    series_position: book?.series_position || null,
     status: book?.status || "backlog",
   }
 
@@ -114,6 +127,8 @@ export const BookEditForm = ({
         format: values.format,
         cover_i: null,
         number_of_pages: values.number_of_pages,
+        series: values.series,
+        series_position: values.series_position,
         status: values.status,
       }
     } else {
@@ -126,6 +141,8 @@ export const BookEditForm = ({
         format: values.format,
         cover_i: book.cover_i,
         number_of_pages: values.number_of_pages,
+        series: values.series,
+        series_position: values.series_position,
         status: values.status,
       }
     }
@@ -220,6 +237,69 @@ export const BookEditForm = ({
                     </FormItem>
                   )}
                 />
+
+                <div className="sm:flex sm:justify-between sm:gap-8">
+                  <FormField
+                    name="series"
+                    control={form.control}
+                    render={({ field }) => (
+                      <FormItem className="flex-grow pb-2 sm:pb-0">
+                        <FormControl>
+                          {/*<FloatingLabelInput*/}
+                          {/*  type="string"*/}
+                          {/*  label="Series"*/}
+                          {/*  {...field}*/}
+                          {/*  value={field.value || ""}*/}
+                          {/*/>*/}
+                          <ComboboxWithCreate
+                            mode="single"
+                            options={series.map((s) => ({
+                              label: s.name,
+                              value: s.key,
+                            }))}
+                            placeholder="Series..."
+                            selected={field.value || ""}
+                            onChange={(value) =>
+                              form.setValue(
+                                "series",
+                                typeof value === "string" ? value : value[0],
+                              )
+                            }
+                            onCreate={(value) => {
+                              if (value && !series.find((s) => s.name === value)) {
+                                addSeries({ key: series.length.toString(), name: value })
+                              }
+                              console.log(value)
+                              form.setValue("series", value)
+                            }}
+                          />
+
+                        </FormControl>
+                      </FormItem>
+                    )}
+                  />
+
+                  <FormField
+                    name="series_position"
+                    control={form.control}
+                    render={({ field }) => (
+                      <FormItem className="w-24">
+                        <FormControl>
+                          <FloatingLabelInput
+                            type="number"
+                            label="Volume"
+                            {...field}
+                            value={field.value || ""}
+                            onChange={(e) =>
+                              field.onChange(parseFloat(e.target.value) || null)
+                            }
+                          />
+                        </FormControl>
+                        <FormMessage className="mt-1 pl-2 pr-2" />
+                      </FormItem>
+                    )}
+                  />
+                </div>
 
                 <div className="sm:flex sm:justify-between">
                   <FormField

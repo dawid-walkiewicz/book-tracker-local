@@ -112,6 +112,8 @@ export const BookSearch = () => {
                 format: response.data.physical_format,
                 cover_i: cover,
                 number_of_pages: response.data.number_of_pages,
+                series: null,
+                series_position: null,
                 status: "backlog",
               },
             ])
@@ -128,6 +130,8 @@ export const BookSearch = () => {
               format: response.data.physical_format,
               cover_i: null,
               number_of_pages: response.data.number_of_pages,
+              series: null,
+              series_position: null,
               status: "backlog",
             },
           ])

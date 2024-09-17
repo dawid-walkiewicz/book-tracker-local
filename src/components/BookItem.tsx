@@ -31,14 +31,14 @@ export const BookItem = ({
   index: number
   listType: Book["status"]
 }) => {
-  const { moveBook, removeBook } = useLibraryStore((state) => state)
+  const { moveBook, removeBook, series } = useLibraryStore((state) => state)
 
   const moveToList = (book: Book, targetList: Book["status"]) => {
     moveBook(book, targetList)
   }
 
   return (
-    <BookDetailsDialog book={book}>
+    <BookDetailsDialog book={book} series={series.find((s) => s.key === book.series) || null}>
       <Card
         key={index}
         className="flex flex-col items-center rounded-none sm:flex-row sm:pl-2"
