@@ -158,6 +158,7 @@ export const BookEditForm = ({
                   <FormItem className="w-3/4 pt-2 sm:w-fit">
                     <FormControl>
                       <Input
+                        className="dark:file:text-foreground"
                         type="file"
                         placeholder="Cover"
                         onChange={handleCoverChange}
