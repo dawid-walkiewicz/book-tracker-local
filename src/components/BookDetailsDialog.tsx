@@ -72,7 +72,7 @@ export const BookDetailsDialog = ({
           </DialogTitle>
           <DialogDescription>
             <VisuallyHidden.Root>
-              Details of {book.title} by {book.author_name.join(", ")}
+              Details of {book.title} by {book.author_name ? book.author_name.join(", ") : "-"}
             </VisuallyHidden.Root>
           </DialogDescription>
         </DialogHeader>
@@ -86,7 +86,7 @@ export const BookDetailsDialog = ({
             <div className="flex flex-col">
               <h2 className="text-3xl font-bold sm:text-4xl">{book.title}</h2>
               <h3 className="text-2xl font-semibold">
-                {book.author_name.join(", ")}
+                {book.author_name ? book.author_name.join(", ") : "-"}
               </h3>
             </div>
 

@@ -11,6 +11,7 @@ import { Button } from "@/components/ui/button"
 
 import { GiBookPile, GiBookshelf, GiBookmarklet } from "react-icons/gi"
 import { RiDeleteBin2Fill } from "react-icons/ri"
+import { TbBookOff } from "react-icons/tb";
 
 import {
   Tooltip,
@@ -42,16 +43,16 @@ export const BookItem = ({
         key={index}
         className="flex flex-col items-center rounded-none sm:flex-row sm:pl-2"
       >
-        <div className="w-full flex-shrink-0 justify-center p-2 sm:w-1/6">
+        <div className="w-full flex-shrink-0 justify-center pt-2 sm:pb-2 sm:pl-2 sm:w-1/6">
           <BookCoverLarge coverId={book.cover_i} title={book.title} />
         </div>
 
         <div className="flex-grow p-4 pb-0 pt-0 sm:pl-0">
           <CardHeader>
             <CardTitle>{book.title}</CardTitle>
-            <CardDescription>{book.author_name.join(", ")}</CardDescription>
+            <CardDescription className="text-md">{book.author_name ? book.author_name.join(", ") : "-"}</CardDescription>
           </CardHeader>
-          <CardFooter className="flex justify-between">
+          <CardFooter className="flex-col sm:flex-row justify-between">
             <Tooltip>
               <TooltipTrigger asChild>
                 <Button variant="destructive" onClick={() => removeBook(book)}>
@@ -64,7 +65,7 @@ export const BookItem = ({
               <TooltipContent>Delete book from reading list</TooltipContent>
             </Tooltip>
 
-            <div className="inline-flex rounded-lg shadow-sm">
+            <div className="pt-4 sm:pt-0 inline-flex rounded-lg shadow-sm">
               <Tooltip>
                 <TooltipTrigger asChild>
                   <Button
@@ -82,7 +83,21 @@ export const BookItem = ({
               <Tooltip>
                 <TooltipTrigger asChild>
                   <Button
-                    className="rounded-l-none rounded-r-none"
+                    className="rounded-l-none rounded-r-none border-r-0"
+                    variant="outline"
+                    onClick={() => moveToList(book, "completed")}
+                    disabled={listType === "completed"}
+                  >
+                    <GiBookshelf className="size-5 pb-0.5 sm:size-6" />
+                  </Button>
+                </TooltipTrigger>
+                <TooltipContent>Mark as "Completed"</TooltipContent>
+              </Tooltip>
+
+              <Tooltip>
+                <TooltipTrigger asChild>
+                  <Button
+                    className="rounded-l-none rounded-r-none border-r-0"
                     variant="outline"
                     onClick={() => moveToList(book, "backlog")}
                     disabled={listType === "backlog"}
@@ -96,16 +111,17 @@ export const BookItem = ({
               <Tooltip>
                 <TooltipTrigger asChild>
                   <Button
-                    className="rounded-l-none rounded-r-md border-l-0"
+                    className="rounded-l-none rounded-r-md"
                     variant="outline"
-                    onClick={() => moveToList(book, "completed")}
-                    disabled={listType === "completed"}
+                    onClick={() => moveToList(book, "dropped")}
+                    disabled={listType === "dropped"}
                   >
-                    <GiBookshelf className="size-5 pb-0.5 sm:size-6" />
+                    <TbBookOff className="size-5 sm:size-6" />
                   </Button>
                 </TooltipTrigger>
-                <TooltipContent>Mark as "Completed"</TooltipContent>
+                <TooltipContent>Mark as "Dropped"</TooltipContent>
               </Tooltip>
+
             </div>
           </CardFooter>
         </div>

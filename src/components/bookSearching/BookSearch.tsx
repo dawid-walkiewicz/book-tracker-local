@@ -54,7 +54,7 @@ export const BookSearch = () => {
 
     try {
       const response = await axios.get<SearchResult>(
-        `https://openlibrary.org/search.json?q=${query}&page=${page}&limit=${resultsPerPage}&lang=pl&fields=key,title,author_name,cover_i,editions`,
+        `https://openlibrary.org/search.json?q=${query}&page=${page}&limit=${resultsPerPage}&lang=pl&fields=key,title,author_name,first_publish_year,number_of_pages_median,cover_i,editions`,
       )
 
       const processedWorks = response.data.docs.map((work) => {

@@ -75,7 +75,7 @@ export const BookEditForm = ({
 
   const initialValues = {
     title: book?.title || "",
-    author_name: book?.author_name.join(", ") || "",
+    author_name: book?.author_name ? book.author_name.join(", ") : "",
     publish_year: book?.publish_year || null,
     publishers: book?.publishers?.join(", ") || "",
     format: book?.format || "",
