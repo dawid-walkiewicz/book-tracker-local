@@ -1,6 +1,6 @@
 //https://medium.com/@wbern/getting-react-18s-strict-mode-to-work-with-react-beautiful-dnd-47bc909348e4
 
-import { Children, useEffect, useState } from "react"
+import { useEffect, useState } from "react"
 import { Droppable, DroppableProps } from "react-beautiful-dnd"
 
 export const StrictModeDropable = ({ children, ...props }: DroppableProps) => {

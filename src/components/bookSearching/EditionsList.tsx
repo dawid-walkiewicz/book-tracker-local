@@ -32,12 +32,12 @@ export const EditionsList = ({
   const { books, addBook } = useLibraryStore((state) => state)
 
   return (
-    <div className="block max-h-[200px] overflow-y-auto sm:max-h-[300px] [&::-webkit-scrollbar-thumb]:bg-gray-300 dark:[&::-webkit-scrollbar-thumb]:bg-slate-500 [&::-webkit-scrollbar-track]:bg-gray-100 dark:[&::-webkit-scrollbar-track]:bg-slate-700 [&::-webkit-scrollbar]:w-2">
+    <div className="block pb-4 pl-2 pr-2 sm:pb-0 sm:pl-0 sm:pr-0 max-h-[200px] overflow-y-auto sm:max-h-[300px] [&::-webkit-scrollbar-thumb]:bg-gray-300 dark:[&::-webkit-scrollbar-thumb]:bg-slate-500 [&::-webkit-scrollbar-track]:bg-gray-100 dark:[&::-webkit-scrollbar-track]:bg-slate-700 [&::-webkit-scrollbar]:w-2">
       {query.length > 0 && editionResults.length > 0 ? (
         <Table>
           <TableHeader>
             <TableRow>
-              <TableHead className="flex justify-center items-center">
+              <TableHead className="flex items-center justify-center">
                 <IoMdArrowBack
                   className="size-6 cursor-pointer"
                   onClick={() => {

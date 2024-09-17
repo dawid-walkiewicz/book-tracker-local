@@ -13,6 +13,8 @@ import { Work } from "@/libraryStore"
 
 import { BookCoverMedium } from "@/components/BookCover"
 
+import { IoMdMore } from "react-icons/io"
+
 export const SearchResults = ({
   query,
   wasSearched,
@@ -59,6 +61,7 @@ export const SearchResults = ({
                 </TableCell>
                 <TableCell>
                   <Button
+                    className="hidden sm:inline"
                     variant="secondary"
                     disabled={work.editions.length === 0}
                     onClick={() => {
@@ -66,12 +69,20 @@ export const SearchResults = ({
                       setIsEditionsVisible(true)
 
                       console.log(work)
-
-                      // navigate(`/edit/${cleanedKey}`)
                     }}
                   >
                     Editions
                   </Button>
+                  <IoMdMore
+                    className="inline size-6 sm:hidden cursor-pointer"
+                    aria-hidden="true"
+                    onClick={() => {
+                      searchEditions(work.editions, work.author_name)
+                      setIsEditionsVisible(true)
+
+                      console.log(work)
+                    }}
+                  />
                 </TableCell>
               </TableRow>
             ))}
@@ -79,7 +90,9 @@ export const SearchResults = ({
         </Table>
       ) : (
         <div className="flex max-h-60 items-center justify-center p-16">
-          <p className="text-gray-600 dark:text-gray-400">{wasSearched ? "Nothing found :(" : "Start your search!"}</p>
+          <p className="text-gray-600 dark:text-gray-400">
+            {wasSearched ? "Nothing found :(" : "Start your search!"}
+          </p>
         </div>
       )}
     </div>
