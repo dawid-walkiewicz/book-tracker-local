@@ -11,6 +11,8 @@ import {
 
 import { BookCoverMedium } from "@/components/BookCover"
 
+import { IoMdArrowBack } from "react-icons/io"
+
 import { Book, useLibraryStore } from "@/libraryStore"
 import { useNavigate } from "react-router-dom"
 
@@ -35,7 +37,15 @@ export const EditionsList = ({
         <Table>
           <TableHeader>
             <TableRow>
-              <TableHead></TableHead>
+              <TableHead className="flex justify-center items-center">
+                <IoMdArrowBack
+                  className="size-6 cursor-pointer"
+                  onClick={() => {
+                    setIsEditionsVisible(false)
+                    setEditionResults([])
+                  }}
+                />
+              </TableHead>
               <TableHead>Title</TableHead>
               <TableHead className="hidden sm:table-cell">Author</TableHead>
               <TableHead>Publishers</TableHead>
