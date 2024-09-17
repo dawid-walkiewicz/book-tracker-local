@@ -17,7 +17,7 @@ export const navigation = [
   { name: "Reading", href: "/reading", current: false },
   { name: "Completed", href: "/completed", current: false },
   { name: "Plan to read", href: "/backlog", current: false },
-  { name: "Droped", href: "/dropped", current: false },
+  { name: "Dropped", href: "/dropped", current: false },
 ]
 
 const App = () => {
