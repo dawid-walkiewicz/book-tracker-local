@@ -41,6 +41,7 @@ interface BookStore extends BookState {
   removeBook: (book: Book) => void
   moveBook: (book: Book, newStatus: Book["status"]) => void
   loadBooksFromLocalStorage: () => void
+  loadSeriesFromLocalStorage: () => void
   reorderBooks: (
     listType: Book["status"],
     startIndex: number,
@@ -147,6 +148,16 @@ export const useLibraryStore = create<BookStore>((set) => ({
       set({ books: JSON.parse(savedBooks) })
     } else {
       set({ books: [] })
+    }
+  },
+
+  loadSeriesFromLocalStorage: () => {
+    const savedSeries = localStorage.getItem("seriesList")
+
+    if (savedSeries) {
+      set({ series: JSON.parse(savedSeries) })
+    } else {
+      set({ series: [] })
     }
   },
 

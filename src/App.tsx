@@ -21,11 +21,12 @@ export const navigation = [
 ]
 
 const App = () => {
-  const { loadBooksFromLocalStorage } = useLibraryStore((state) => state)
+  const { loadBooksFromLocalStorage, loadSeriesFromLocalStorage } = useLibraryStore((state) => state)
 
   useEffect(() => {
     loadBooksFromLocalStorage()
-  }, [loadBooksFromLocalStorage])
+    loadSeriesFromLocalStorage()
+  }, [loadBooksFromLocalStorage, loadSeriesFromLocalStorage])
 
   return (
     <Router>
