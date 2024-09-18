@@ -245,12 +245,6 @@ export const BookEditForm = ({
                     render={({ field }) => (
                       <FormItem className="flex-grow pb-2 sm:pb-0">
                         <FormControl>
-                          {/*<FloatingLabelInput*/}
-                          {/*  type="string"*/}
-                          {/*  label="Series"*/}
-                          {/*  {...field}*/}
-                          {/*  value={field.value || ""}*/}
-                          {/*/>*/}
                           <ComboboxWithCreate
                             mode="single"
                             options={series.map((s) => ({
@@ -288,6 +282,7 @@ export const BookEditForm = ({
                           <FloatingLabelInput
                             type="number"
                             label="Volume"
+                            disabled={!form.watch("series")}
                             {...field}
                             value={field.value || ""}
                             onChange={(e) =>
