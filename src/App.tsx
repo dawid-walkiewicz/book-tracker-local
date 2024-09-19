@@ -1,5 +1,4 @@
 import { useEffect } from "react"
-import { BookList } from "./components/BookList"
 import { useLibraryStore } from "./libraryStore"
 import { Layout } from "./components/Layout"
 
@@ -11,6 +10,7 @@ import { PlanToReadPage } from "./components/Pages/PlanToReadPage"
 import { CompletedPage } from "./components/Pages/CompletedPage"
 import { DroppedPage } from "./components/Pages/DroppedPage"
 import { EditBookPage } from "./components/Pages/EditBookPage"
+import { AllListPage } from "@/components/Pages/AllListPage.tsx"
 
 export const navigation = [
   { name: "Home", href: "/", current: true },
@@ -33,7 +33,7 @@ const App = () => {
       <Layout>
         <TooltipProvider>
           <Routes>
-            <Route path="/" element={<BookList />} />
+            <Route path="/" element={<AllListPage />} />
             <Route path="/reading" element={<ReadingPage />} />
             <Route path="/backlog" element={<PlanToReadPage />} />
             <Route path="/completed" element={<CompletedPage />} />

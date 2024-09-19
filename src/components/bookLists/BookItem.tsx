@@ -1,4 +1,4 @@
-import { useLibraryStore, Book } from "@/libraryStore"
+import { useLibraryStore, Book } from "@/libraryStore.ts"
 
 import {
   Card,
@@ -6,8 +6,8 @@ import {
   CardFooter,
   CardHeader,
   CardTitle,
-} from "@/components/ui/card"
-import { Button } from "@/components/ui/button"
+} from "@/components/ui/card.tsx"
+import { Button } from "@/components/ui/button.tsx"
 
 import { GiBookPile, GiBookshelf, GiBookmarklet } from "react-icons/gi"
 import { RiDeleteBin2Fill } from "react-icons/ri"
@@ -17,10 +17,10 @@ import {
   Tooltip,
   TooltipContent,
   TooltipTrigger,
-} from "@/components/ui/tooltip"
+} from "@/components/ui/tooltip.tsx"
 
-import { BookCoverLarge } from "./BookCover"
-import { BookDetailsDialog } from "./BookDetailsDialog"
+import { BookCoverLarge } from "../BookCover.tsx"
+import { BookDetailsDialog } from "./BookDetailsDialog.tsx"
 
 export const BookItem = ({
   book,
@@ -41,7 +41,7 @@ export const BookItem = ({
     <BookDetailsDialog book={book} series={series.find((s) => s.key === book.series) || null}>
       <Card
         key={index}
-        className="flex flex-col items-center rounded-none sm:flex-row sm:pl-2"
+        className="flex flex-col items-center rounded-none sm:flex-row sm:pl-2 cursor-pointer select-none"
       >
         <div className="w-full flex-shrink-0 justify-center pt-2 sm:pb-2 sm:pl-2 sm:w-1/6">
           <BookCoverLarge coverId={book.cover_i} title={book.title} />

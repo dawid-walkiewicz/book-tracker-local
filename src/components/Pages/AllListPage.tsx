@@ -1,19 +1,19 @@
-import { GiBookPile, GiBookshelf, GiBookmarklet } from "react-icons/gi"
-
-import { AddBookDialog } from "./AddBookDrawer"
-import { BookSearch } from "./bookSearching/BookSearch"
-import { DraggableBookList } from "./DraggableBookList"
+import React from "react"
+import { AddBookDialog } from "@/components/AddBookDrawer.tsx"
+import { BookSearch } from "@/components/bookSearching/BookSearch.tsx"
+import { GiBookmarklet, GiBookPile, GiBookshelf } from "react-icons/gi"
+import { DraggableBookList } from "@/components/bookLists/DraggableBookList.tsx"
 import { TbBookOff } from "react-icons/tb"
 
-export const BookList = () => {
+export const AllListPage = () => {
   return (
     <div className="space-y-8 p-4">
       <div className="flex gap-2 max-sm:flex-col sm:items-center sm:justify-between">
         <h2 className="mb-4 text-2xl font-bold">Reading List</h2>
         <div className="h-full">
-          <AddBookDialog >
+          <AddBookDialog>
             <BookSearch />
-           </AddBookDialog>
+          </AddBookDialog>
         </div>
       </div>
 
@@ -39,7 +39,8 @@ export const BookList = () => {
         Dropped
         <TbBookOff className="size-7" />
       </h3>
-      <DraggableBookList listType="dropped" quote="Don't spend time beating on a wall, hoping to transform it into a door." />
+      <DraggableBookList listType="dropped"
+                         quote="Don't spend time beating on a wall, hoping to transform it into a door." />
     </div>
   )
 }

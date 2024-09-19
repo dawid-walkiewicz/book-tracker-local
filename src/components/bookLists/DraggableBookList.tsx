@@ -1,9 +1,9 @@
-import { Book, useLibraryStore } from "@/libraryStore"
+import { Book, useLibraryStore } from "@/libraryStore.ts"
 
 import { DragDropContext, Draggable, DropResult } from "react-beautiful-dnd"
-import { StrictModeDropable } from "./StrictModeDropable"
+import { StrictModeDropable } from "./StrictModeDropable.tsx"
 
-import { BookItem } from "./BookItem"
+import { DragBookItem } from "@/components/bookLists/DragBookItem.tsx"
 
 export const DraggableBookList = ({
   listType,
@@ -48,7 +48,7 @@ export const DraggableBookList = ({
                         className="my-2"
                       >
                         <div {...provided.dragHandleProps}>
-                          <BookItem
+                          <DragBookItem
                             book={book}
                             index={index}
                             listType={listType}

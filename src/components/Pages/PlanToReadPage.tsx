@@ -2,9 +2,15 @@ import { GiBookPile } from "react-icons/gi"
 
 import { AddBookDialog } from "@/components/AddBookDrawer"
 import { BookSearch } from "@/components/bookSearching/BookSearch"
-import { DraggableBookList } from "@/components/DraggableBookList"
+import { DraggableBookList } from "@/components/bookLists/DraggableBookList.tsx"
+import { useState } from "react"
+import { Button } from "@/components/ui/button.tsx"
+import { BiMoveVertical } from "react-icons/bi"
+import { BookList } from "@/components/bookLists/BookList.tsx"
 
 export const PlanToReadPage = () => {
+  const [isDraggable, setIsDraggable] = useState(false)
+
   return (
     <div className="space-y-8 p-4">
       <div className="flex gap-2 max-sm:flex-col sm:items-center sm:justify-between">
@@ -19,10 +25,27 @@ export const PlanToReadPage = () => {
         </div>
       </div>
 
-      <DraggableBookList
-        listType="backlog"
-        quote="Look before, or you'll find yourself behind."
-      />
+      <div className="space-y-4">
+        <Button
+          variant={isDraggable ? "secondary" : "outline"}
+          size="icon"
+          onClick={() => setIsDraggable(!isDraggable)}
+        >
+          <BiMoveVertical className="size-6" />
+        </Button>
+
+        {!isDraggable ? (
+          <BookList
+            listType="backlog"
+            quote="Look before, or you'll find yourself behind."
+          />
+        ) : (
+          <DraggableBookList
+            listType="backlog"
+            quote="Look before, or you'll find yourself behind."
+          />
+        )}
+      </div>
     </div>
   )
 }
