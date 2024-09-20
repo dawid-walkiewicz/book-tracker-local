@@ -41,7 +41,7 @@ export const BookItem = ({
     <BookDetailsDialog book={book} series={series.find((s) => s.key === book.series) || null}>
       <Card
         key={index}
-        className="flex flex-col items-center rounded-none sm:flex-row sm:pl-2 cursor-pointer select-none"
+        className="flex flex-col items-center rounded-none pt-2 sm:pb-2 sm:flex-row sm:pl-2 cursor-pointer select-none"
       >
         <div className="w-full flex-shrink-0 justify-center pt-2 sm:pb-2 sm:pl-2 sm:w-1/6">
           <BookCoverLarge coverId={book.cover_i} title={book.title} />

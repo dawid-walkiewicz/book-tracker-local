@@ -60,7 +60,7 @@ const SeriesCollapsible = ({
   return (
     <Collapsible>
       <CollapsibleTrigger className="w-full text-left">
-        <Card className="flex cursor-pointer select-none flex-col items-center rounded-none sm:flex-row sm:pl-2">
+        <Card className="flex cursor-pointer select-none flex-col items-center rounded-none pt-2 sm:pb-2 sm:flex-row sm:pl-2">
           <div className="p-2">{coverMiniatures(books)}</div>
 
           <div className="flex-grow">
@@ -76,7 +76,7 @@ const SeriesCollapsible = ({
         </Card>
       </CollapsibleTrigger>
       <CollapsibleContent>
-        <div className="px-2 sm:pl-4 sm:pr-0">
+        <div className="pt-2 sm:pl-4 sm:pr-0">
           {books
             .sort((a, b) => (a.series_position || 0) - (b.series_position || 0))
             .map((book, index) => (

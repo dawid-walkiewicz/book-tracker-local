@@ -45,11 +45,13 @@ export const BookList = ({
           }
 
           return (
+            <div className="mb-2">
             <SeriesCollapsible
               key={seriesKey}
               books={booksInSeries}
               series={seriesData}
             />
+            </div>
           );
         })
       ) : (
