@@ -50,7 +50,7 @@ export const BookItem = ({
         <div className="flex-grow p-4 pb-0 pt-0 sm:pl-0">
           <CardHeader>
             <CardTitle>{book.title}</CardTitle>
-            <CardDescription className="text-md">{book.author_name ? book.author_name.join(", ") : "-"}</CardDescription>
+            <CardDescription className="text-lg">{book.author_name ? book.author_name.join(", ") : "-"}</CardDescription>
           </CardHeader>
           <CardFooter className="flex-col sm:flex-row justify-between">
             <Tooltip>

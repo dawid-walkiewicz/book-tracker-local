@@ -9,7 +9,7 @@ import {
   TableRow,
 } from "@/components/ui/table"
 
-import { BookCoverMedium } from "@/components/BookCover"
+import { BookCoverSmall } from "@/components/BookCover"
 
 import { IoMdArrowBack } from "react-icons/io"
 
@@ -58,7 +58,7 @@ export const EditionsList = ({
             {editionResults.map((book, index) => (
               <TableRow key={index}>
                 <TableCell className="mr-0 p-2">
-                  <BookCoverMedium coverId={book.cover_i} title={book.title} />
+                  <BookCoverSmall coverId={book.cover_i} title={book.title} />
                 </TableCell>
                 <TableCell className="pl-0">{book.title}</TableCell>
                 <TableCell className="hidden sm:table-cell">

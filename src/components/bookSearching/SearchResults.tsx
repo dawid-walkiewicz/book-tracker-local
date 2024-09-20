@@ -11,7 +11,7 @@ import {
 
 import { Work } from "@/libraryStore"
 
-import { BookCoverMedium } from "@/components/BookCover"
+import { BookCoverSmall } from "@/components/BookCover"
 
 import { IoMdMore } from "react-icons/io"
 
@@ -47,7 +47,7 @@ export const SearchResults = ({
             {workResults.map((work, index) => (
               <TableRow key={index}>
                 <TableCell className="mr-0 p-2">
-                  <BookCoverMedium coverId={work.cover_i} title={work.title} />
+                  <BookCoverSmall coverId={work.cover_i} title={work.title} />
                 </TableCell>
                 <TableCell className="pl-0">{work.title}</TableCell>
                 <TableCell>
