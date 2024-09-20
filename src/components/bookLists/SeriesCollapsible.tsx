@@ -1,5 +1,4 @@
 import { Book, Series } from "@/libraryStore.ts"
-import { BookItem } from "@/components/bookLists/BookItem.tsx"
 
 import {
   Collapsible,
@@ -14,6 +13,7 @@ import {
   CardTitle,
 } from "@/components/ui/card"
 import { BookCoverMedium } from "@/components/BookCover.tsx"
+import { SeriesBookItem } from "@/components/bookLists/SeriesBookItem.tsx"
 
 const SeriesCollapsible = ({
   books,
@@ -39,7 +39,7 @@ const SeriesCollapsible = ({
     if (items.length < 3) {
       for (let i = items.length; i < 3; i++) {
         items.push(
-          <div className={`z-${50 - i * 10} ${i === 0 ? "" : "-ml-16"}`}>
+          <div className={`z-${50 - i * 10} ${i === 0 ? "" : "-ml-16"} opacity-50`}>
             <BookCoverMedium coverId={null} title={"Empty cover"} />
           </div>,
         )
@@ -76,11 +76,11 @@ const SeriesCollapsible = ({
         </Card>
       </CollapsibleTrigger>
       <CollapsibleContent>
-        <div className="px-4 sm:pl-8 sm:pr-0">
+        <div className="px-2 sm:pl-4 sm:pr-0">
           {books
             .sort((a, b) => (a.series_position || 0) - (b.series_position || 0))
             .map((book, index) => (
-              <BookItem book={book} index={index} listType="reading" />
+              <SeriesBookItem book={book} index={index} listType="reading" />
             ))}
         </div>
       </CollapsibleContent>

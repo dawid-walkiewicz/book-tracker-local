@@ -3,13 +3,8 @@ import { BookSearch } from "@/components/bookSearching/BookSearch.tsx"
 import { GiBookmarklet, GiBookPile, GiBookshelf } from "react-icons/gi"
 import { TbBookOff } from "react-icons/tb"
 import { BookList } from "@/components/bookLists/BookList.tsx"
-import SeriesCollapsible from "@/components/bookLists/SeriesCollapsible.tsx"
-
-import { useLibraryStore } from "@/libraryStore.ts"
 
 export const AllListPage = () => {
-  const { books } = useLibraryStore((state) => state)
-
   return (
     <div className="space-y-8 p-4">
       <div className="flex gap-2 max-sm:flex-col sm:items-center sm:justify-between">
@@ -20,11 +15,6 @@ export const AllListPage = () => {
           </AddBookDialog>
         </div>
       </div>
-
-      <SeriesCollapsible
-        books={books.filter((book) => book.series === "0") || []}
-        series={{ key: "0", name: "Archiwum Burzowego Światła" }}
-      />
 
       <h3 className="my-2 flex items-end gap-2 text-xl font-semibold">
         Currently Reading
