@@ -12,8 +12,8 @@ export type Work = {
 }
 
 export type Series = {
-  key: string,
-  name: string,
+  key: string
+  name: string
 }
 
 export type Book = {
@@ -31,8 +31,8 @@ export type Book = {
 }
 
 interface BookState {
-  books: Book[],
-  series: Series[],
+  books: Book[]
+  series: Series[]
 }
 
 interface BookStore extends BookState {
@@ -49,6 +49,8 @@ interface BookStore extends BookState {
   ) => void
   getBook: (key: string) => Book | null
   editBook: (book: Book) => void
+  exportJSON: () => void
+  importJSON: () => void
 }
 
 export const useLibraryStore = create<BookStore>((set) => ({
@@ -162,14 +164,12 @@ export const useLibraryStore = create<BookStore>((set) => ({
   },
 
   getBook: (key: string) => {
-    const savedBooks = localStorage.getItem("readingList");
-    const books: Book[] = savedBooks ? JSON.parse(savedBooks) : [];
-  
-    const foundBook = books.find((book: Book) => book.key === key);
-  
-    return (
-      foundBook || null
-    );
+    const savedBooks = localStorage.getItem("readingList")
+    const books: Book[] = savedBooks ? JSON.parse(savedBooks) : []
+
+    const foundBook = books.find((book: Book) => book.key === key)
+
+    return foundBook || null
   },
 
   editBook: (book) =>
@@ -182,4 +182,69 @@ export const useLibraryStore = create<BookStore>((set) => ({
 
       return { books: updatedBooks }
     }),
+
+  exportJSON: () => {
+    const savedBooks = localStorage.getItem("readingList")
+    const savedSeries = localStorage.getItem("seriesList")
+
+    const books = savedBooks ? JSON.parse(savedBooks) : []
+    const series = savedSeries ? JSON.parse(savedSeries) : []
+
+    const data = { books, series }
+
+    if (data) {
+      const blob = new Blob([JSON.stringify(data, null, 2)], {
+        type: "application/json",
+      })
+      const url = URL.createObjectURL(blob)
+      const a = document.createElement("a")
+
+      a.href = url
+      a.download = "reading-list.json"
+      a.click()
+
+      URL.revokeObjectURL(url)
+    }
+  },
+
+  importJSON: () => {
+    const input = document.createElement("input")
+    input.type = "file"
+    input.accept = ".json"
+
+    input.onchange = (e) => {
+      const file = (e.target as HTMLInputElement).files?.[0]
+
+      if (!file) return
+
+      const reader = new FileReader()
+
+      reader.onload = (e) => {
+        const content = e.target?.result
+
+        if (typeof content !== "string") return
+
+        try {
+          const data = JSON.parse(content)
+
+          if (data.books && Array.isArray(data.books)) {
+            localStorage.setItem("readingList", JSON.stringify(data.books))
+            set({ books: data.books })
+          }
+
+          if (data.series && Array.isArray(data.series)) {
+            localStorage.setItem("seriesList", JSON.stringify(data.series))
+            set({ series: data.series })
+          }
+
+        } catch (error) {
+          console.error("Error:", error)
+        }
+      }
+
+      reader.readAsText(file)
+    }
+
+    input.click()
+  },
 }))

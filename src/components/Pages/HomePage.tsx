@@ -3,8 +3,12 @@ import { BookSearch } from "@/components/bookSearching/BookSearch.tsx"
 import { GiBookmarklet, GiBookPile, GiBookshelf } from "react-icons/gi"
 import { TbBookOff } from "react-icons/tb"
 import { BookList } from "@/components/bookLists/BookList.tsx"
+import { Button } from "@/components/ui/button"
+import { useLibraryStore } from "@/libraryStore"
 
-export const AllListPage = () => {
+export const HomePage = () => {
+  const { importJSON, exportJSON } = useLibraryStore((state) => state)
+
   return (
     <div className="space-y-8 p-4">
       <div className="flex gap-2 max-sm:flex-col sm:items-center sm:justify-between">
@@ -14,6 +18,16 @@ export const AllListPage = () => {
             <BookSearch />
           </AddBookDialog>
         </div>
+      </div>
+
+      <div className="flex justify-center gap-8">
+        <Button variant="outline" onClick={exportJSON}>
+          Export list
+        </Button>
+
+        <Button variant="outline" onClick={importJSON}>
+          Import list
+        </Button>
       </div>
 
       <h3 className="my-2 flex items-end gap-2 text-xl font-semibold">
