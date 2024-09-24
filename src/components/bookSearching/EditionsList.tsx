@@ -58,7 +58,9 @@ export const EditionsList = ({
             {editionResults.map((book, index) => (
               <TableRow key={index}>
                 <TableCell className="mr-0 p-2">
-                  <BookCoverSmall coverId={book.cover_i} title={book.title} />
+                  <div className="w-12 sm:w-16">
+                    <BookCoverSmall coverId={book.cover_i} title={book.title} />
+                  </div>
                 </TableCell>
                 <TableCell className="pl-0">{book.title}</TableCell>
                 <TableCell className="hidden sm:table-cell">

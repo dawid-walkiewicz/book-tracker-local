@@ -12,7 +12,7 @@ export const BookCoverSmall = ({
   const [loading, setLoading] = useState(true)
 
   return (
-    <div className="relative w-12 sm:w-16">
+    <div className="relative">
       {loading && (
         <div className="absolute inset-0 flex items-center justify-center bg-gray-100">
           {" "}

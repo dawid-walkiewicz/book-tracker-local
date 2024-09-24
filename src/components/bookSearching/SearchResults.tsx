@@ -47,7 +47,10 @@ export const SearchResults = ({
             {workResults.map((work, index) => (
               <TableRow key={index}>
                 <TableCell className="mr-0 p-2">
-                  <BookCoverSmall coverId={work.cover_i} title={work.title} />
+                  <div className="w-12 sm:w-16">
+                    <BookCoverSmall coverId={work.cover_i} title={work.title} />
+                  </div>
+                  
                 </TableCell>
                 <TableCell className="pl-0">{work.title}</TableCell>
                 <TableCell>

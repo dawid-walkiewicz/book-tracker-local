@@ -1,7 +1,7 @@
 import { Book, useLibraryStore } from "@/libraryStore.ts"
 
 import { DragDropContext, Draggable, DropResult } from "react-beautiful-dnd"
-import { StrictModeDropable } from "./StrictModeDropable.tsx"
+import { StrictModeDroppable } from "./StrictModeDroppable.tsx"
 
 import { DragBookItem } from "@/components/bookLists/DragBookItem.tsx"
 
@@ -13,6 +13,8 @@ export const DraggableBookList = ({
   quote: string
 }) => {
   const { books, reorderBooks } = useLibraryStore((state) => state)
+
+  const filteredBooks = books.filter((book) => book.status === listType)
 
   const onDragEnd = (result: DropResult) => {
     if (!result.destination) return
@@ -26,13 +28,11 @@ export const DraggableBookList = ({
     reorderBooks(listType, startIndex, endIndex)
   }
 
-  const filteredBooks = books.filter((book) => book.status === listType)
-
   return (
     <DragDropContext onDragEnd={onDragEnd}>
       <div className="rounded-lg border bg-muted p-4">
-        {books.filter((book) => book.status === listType).length > 0 ? (
-          <StrictModeDropable droppableId={listType}>
+        {filteredBooks.length > 0 ? (
+          <StrictModeDroppable droppableId={listType}>
             {(provided) => (
               <div {...provided.droppableProps} ref={provided.innerRef}>
                 {filteredBooks.map((book, index) => (
@@ -61,7 +61,7 @@ export const DraggableBookList = ({
                 {provided.placeholder}
               </div>
             )}
-          </StrictModeDropable>
+          </StrictModeDroppable>
         ) : (
           <div className="p-4">
             <p className="text-primary">{quote}</p>

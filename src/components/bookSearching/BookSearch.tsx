@@ -99,8 +99,6 @@ export const BookSearch = () => {
 
         if (response.data.covers) {
           for (const cover of response.data.covers) {
-            console.log(response.data)
-
             setEditionResults((prev) => [
               ...prev,
               {
