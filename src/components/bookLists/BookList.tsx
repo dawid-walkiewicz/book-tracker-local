@@ -3,15 +3,15 @@ import { BookItem } from "@/components/bookLists/BookItem.tsx"
 import SeriesCollapsible from "@/components/bookLists/SeriesCollapsible.tsx"
 
 export const BookList = ({
+  filteredBooks,
   listType,
   quote,
 }: {
+  filteredBooks: Book[]
   listType: Book["status"]
   quote: string
 }) => {
-  const { books, series } = useLibraryStore((state) => state)
-
-  const filteredBooks = books.filter((book) => book.status === listType)
+  const { series } = useLibraryStore((state) => state)
 
   const groupBooksBySeries = filteredBooks.reduce(
     (acc, book) => {

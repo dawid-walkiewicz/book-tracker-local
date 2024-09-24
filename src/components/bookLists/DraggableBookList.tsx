@@ -6,15 +6,15 @@ import { StrictModeDroppable } from "./StrictModeDroppable.tsx"
 import { DragBookItem } from "@/components/bookLists/DragBookItem.tsx"
 
 export const DraggableBookList = ({
+  filteredBooks,
   listType,
   quote,
 }: {
+  filteredBooks: Book[]
   listType: Book["status"]
   quote: string
 }) => {
-  const { books, reorderBooks } = useLibraryStore((state) => state)
-
-  const filteredBooks = books.filter((book) => book.status === listType)
+  const { reorderBooks } = useLibraryStore((state) => state)
 
   const onDragEnd = (result: DropResult) => {
     if (!result.destination) return
