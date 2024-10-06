@@ -14,7 +14,7 @@ import {
   SelectValue,
 } from "@/components/ui/select.tsx"
 import { BookCoverLarge } from "../BookCover.tsx"
-import { Book, Series } from "@/libraryStore.ts"
+import { Book, Series, useLibraryStore } from "@/libraryStore.ts"
 import { GiBookPile, GiBookshelf, GiBookmarklet } from "react-icons/gi"
 import { TbBookOff } from "react-icons/tb"
 
@@ -22,7 +22,7 @@ import * as VisuallyHidden from "@radix-ui/react-visually-hidden"
 
 import { useNavigate } from "react-router-dom"
 import { DialogDescription } from "@radix-ui/react-dialog"
-import { useState } from "react"
+import { useEffect, useState } from "react"
 
 type StatusType = "completed" | "reading" | "backlog" | "dropped";
 
@@ -35,9 +35,22 @@ export const BookDetailsDialog = ({
   series: Series | null
   children: React.ReactNode
 }) => {
+  const { moveBook } = useLibraryStore((state) => state)
+
   const navigate = useNavigate()
 
   const [status, setStatus] = useState<StatusType>(book.status)
+  const [open, setOpen] = useState(false)
+
+  const handleStatusChange = (status: StatusType) => {
+    setStatus(status)
+  }
+
+  useEffect(() => {
+    moveBook(book, status)
+    setOpen(false)
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [status])
 
   const readingStatus = (status: Book["status"]) => {
     switch (status) {
@@ -75,8 +88,8 @@ export const BookDetailsDialog = ({
   }
 
   return (
-    <Dialog>
-      <DialogTrigger asChild>{children}</DialogTrigger>
+    <Dialog open={open} onOpenChange={setOpen}>
+      <DialogTrigger asChild >{children}</DialogTrigger>
       <DialogContent className="sm:min-h-[300px] sm:max-w-2xl">
         <DialogHeader>
           <DialogTitle>
@@ -104,10 +117,7 @@ export const BookDetailsDialog = ({
             </div>
 
             {/*{readingStatus(book.status)}*/}
-            <Select defaultValue={status} onValueChange={(value: StatusType) => {
-              setStatus(value)
-              console.log(value)
-            }}>
+            <Select defaultValue={status} onValueChange={handleStatusChange}>
               <SelectTrigger className="max-w-fit">
                 <SelectValue>{readingStatus(status)}</SelectValue>
               </SelectTrigger>
