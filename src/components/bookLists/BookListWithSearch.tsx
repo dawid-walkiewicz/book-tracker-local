@@ -1,13 +1,16 @@
-import { DraggableBookList } from "@/components/bookLists/DraggableBookList.tsx"
 import { Button } from "@/components/ui/button.tsx"
 import { Input } from "@/components/ui/input.tsx"
-import { BiMoveVertical } from "react-icons/bi"
+import { BiSort } from "react-icons/bi"
 import { useState } from "react"
 import { BookList } from "@/components/bookLists/BookList.tsx"
-
-// import { IoMdSearch } from "react-icons/io"
 import { Book, useLibraryStore } from "@/libraryStore"
-import { set } from "react-hook-form"
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select"
 
 export const BookListWithSearch = ({
   listType,
@@ -18,7 +21,8 @@ export const BookListWithSearch = ({
 }) => {
   const { books, series } = useLibraryStore((state) => state)
 
-  const [isDraggable, setIsDraggable] = useState(false)
+  const [reverseSort, setReverseSort] = useState(false)
+  const [sortType, setSortType] = useState("position")
   const [query, setQuery] = useState("")
 
   const filteredBooks = books
@@ -27,14 +31,21 @@ export const BookListWithSearch = ({
       (book) =>
         book.title.toLowerCase().includes(query.toLowerCase()) ||
         book.author_name.some((author) =>
-          author.toLowerCase().includes(query.toLowerCase())
+          author.toLowerCase().includes(query.toLowerCase()),
         ) ||
-        (book.series && series.find((s) => s.key === book.series)?.name.toLowerCase().includes(query.toLowerCase()))
+        (book.series &&
+          series
+            .find((s) => s.key === book.series)
+            ?.name.toLowerCase()
+            .includes(query.toLowerCase())),
     )
 
   const handleValueChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setQuery(e.target.value)
-    setIsDraggable(false)
+  }
+
+  const handleSortTypeChange = (value: string) => {
+    setSortType(value)
   }
 
   return (
@@ -46,33 +57,39 @@ export const BookListWithSearch = ({
           value={query}
           onChange={handleValueChange}
         />
-        {/* <Button type="submit">
-          <IoMdSearch className="size-6" />
-        </Button> */}
       </div>
 
-      <Button
-        variant={isDraggable ? "secondary" : "outline"}
-        size="icon"
-        disabled={filteredBooks.length === 0 || query.length > 0}
-        onClick={() => setIsDraggable(!isDraggable)}
-      >
-        <BiMoveVertical className="size-6" />
-      </Button>
+      <div className="flex">
+        <Button
+          variant="ghost"
+          className={ reverseSort ? "bg-gray-200" : "" }
+          size="icon"
+          disabled={filteredBooks.length === 0 || query.length > 0}
+          onClick={() => setReverseSort(!reverseSort)}
+        >
+          <BiSort className="size-6" />
+        </Button>
 
-      {!isDraggable ? (
-        <BookList
-          filteredBooks={filteredBooks}
-          listType={listType}
-          quote={quote}
-        />
-      ) : (
-        <DraggableBookList
-          filteredBooks={filteredBooks}
-          listType={listType}
-          quote={quote}
-        />
-      )}
+        <Select onValueChange={handleSortTypeChange}>
+          <SelectTrigger className="w-[180px]">
+            <SelectValue placeholder="Position" />
+          </SelectTrigger>
+          <SelectContent>
+            <SelectItem value="position">Position</SelectItem>
+            <SelectItem value="title">Title</SelectItem>
+            <SelectItem value="author">Author</SelectItem>
+            <SelectItem value="series">Series</SelectItem>
+          </SelectContent>
+        </Select>
+      </div>
+
+      <BookList
+        filteredBooks={filteredBooks}
+        listType={listType}
+        quote={quote}
+        sortType={sortType}
+        reverseSort={reverseSort}
+      />
     </div>
   )
 }
