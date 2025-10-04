@@ -4,7 +4,7 @@ import { Layout } from "./components/Layout"
 
 import { TooltipProvider } from "@/components/ui/tooltip"
 
-import { BrowserRouter as Router, Route, Routes } from "react-router-dom"
+import { HashRouter as Router, Route, Routes } from "react-router-dom"
 import { ReadingPage } from "./components/Pages/ReadingPage"
 import { PlanToReadPage } from "./components/Pages/PlanToReadPage"
 import { CompletedPage } from "./components/Pages/CompletedPage"
@@ -21,7 +21,8 @@ export const navigation = [
 ]
 
 const App = () => {
-  const { loadBooksFromLocalStorage, loadSeriesFromLocalStorage } = useLibraryStore((state) => state)
+  const { loadBooksFromLocalStorage, loadSeriesFromLocalStorage } =
+    useLibraryStore((state) => state)
 
   useEffect(() => {
     loadBooksFromLocalStorage()
