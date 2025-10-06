@@ -204,7 +204,6 @@ export const BookEditForm = ({
                   </FormItem>
                 )}
               />
-              {coverFile && (<p className="text-xs text-yellow-600">Changing path later will break cover.</p>)}
             </div>
 
             <div className="flex flex-col">
