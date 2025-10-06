@@ -1,4 +1,4 @@
-import { BookCoverFile } from "@/components/BookCover"
+import { BookCoverFile, BookCoverLarge } from "@/components/BookCover"
 import { SubmitHandler, useForm } from "react-hook-form"
 import { z } from "zod"
 import { zodResolver } from "@hookform/resolvers/zod"
@@ -36,7 +36,7 @@ import {
 import { Book, useLibraryStore } from "@/libraryStore"
 
 import { useNavigate } from "react-router-dom"
-import React, { useEffect } from "react"
+import { useEffect } from "react"
 import {
   ComboboxWithCreate,
 } from "@/components/ui/combobox-create.tsx"
@@ -110,10 +110,22 @@ export const BookEditForm = ({
     // eslint-disable-next-line
   }, [book])
 
-  const onSubmit: SubmitHandler<z.infer<typeof formSchema>> = (
+  const saveFile = async () => {
+    const cover = form.getValues("cover")
+    if (!cover) return null
+    const arrayBuffer = await cover.arrayBuffer()
+    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+    // @ts-expect-error
+    return await window.electronAPI.saveCover({
+      name: cover.name,
+      data: Array.from(new Uint8Array(arrayBuffer)),
+    })
+  }
+
+  const onSubmit: SubmitHandler<z.infer<typeof formSchema>> = async (
     values: z.infer<typeof formSchema>,
   ) => {
-    console.log(values)
+    const savedPath = await saveFile()
 
     let editedBook: Book
 
@@ -126,6 +138,7 @@ export const BookEditForm = ({
         publishers: values.publishers ? values.publishers.split(", ") : [],
         format: values.format,
         cover_i: null,
+        cover_link: savedPath || null,
         number_of_pages: values.number_of_pages,
         series: values.series,
         series_position: values.series_position,
@@ -140,6 +153,7 @@ export const BookEditForm = ({
         publishers: values.publishers ? values.publishers.split(", ") : [],
         format: values.format,
         cover_i: book.cover_i,
+        cover_link: savedPath || book.cover_link || null,
         number_of_pages: values.number_of_pages,
         series: values.series,
         series_position: values.series_position,
@@ -148,7 +162,6 @@ export const BookEditForm = ({
     }
 
     doOnSubmit(editedBook)
-
     navigate(`/${editedBook.status}`)
   }
 
@@ -166,7 +179,13 @@ export const BookEditForm = ({
         <Card className="w-full divide-y divide-muted">
           <CardContent className="flex flex-col pb-4 pt-4 sm:flex-row sm:justify-evenly">
             <div className="flex flex-col items-center justify-center pb-4 sm:w-1/4 sm:pb-0">
-              <BookCoverFile file={coverFile || null} title="" />
+              {coverFile ?
+                <BookCoverFile file={coverFile} title="" /> :
+                (book?.cover_link ?
+                  <BookCoverLarge cover={book.cover_link} title=""/> :
+                  <BookCoverLarge cover={book?.cover_i || null} title="" />
+                )
+              }
 
               <FormField
                 name="cover"
@@ -185,6 +204,7 @@ export const BookEditForm = ({
                   </FormItem>
                 )}
               />
+              {coverFile && (<p className="text-xs text-yellow-600">Changing path later will break cover.</p>)}
             </div>
 
             <div className="flex flex-col">

@@ -69,7 +69,7 @@ export const HomePage = () => {
                 className={`flex select-none flex-col items-center rounded-none rounded-l-md border-l-8 ${colorBorder(book)} pt-2 sm:flex-row sm:pb-2 sm:pl-2`}
               >
                 <div className="w-1/3 justify-center pt-2 sm:w-1/12 sm:pb-2 sm:pl-2">
-                  <BookCoverSmall coverId={book.cover_i} title={book.title} />
+                  <BookCoverSmall cover={book.cover_link || book.cover_i} title={book.title} />
                 </div>
 
                 <CardHeader>

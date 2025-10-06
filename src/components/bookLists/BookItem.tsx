@@ -44,7 +44,7 @@ export const BookItem = ({
         className="flex flex-col items-center rounded-none pt-2 sm:pb-2 sm:flex-row sm:pl-2 cursor-pointer select-none"
       >
         <div className="w-full flex-shrink-0 justify-center pt-2 sm:pb-2 sm:pl-2 sm:w-1/6">
-          <BookCoverLarge coverId={book.cover_i} title={book.title} />
+          <BookCoverLarge cover={book.cover_link || book.cover_i} title={book.title} />
         </div>
 
         <div className="flex-grow p-4 pb-0 pt-0 sm:pl-0">

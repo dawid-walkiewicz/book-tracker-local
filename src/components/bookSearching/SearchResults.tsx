@@ -48,7 +48,7 @@ export const SearchResults = ({
               <TableRow key={index}>
                 <TableCell className="mr-0 p-2">
                   <div className="w-12 sm:w-16">
-                    <BookCoverSmall coverId={work.cover_i} title={work.title} />
+                    <BookCoverSmall cover={work.cover_i} title={work.title} />
                   </div>
                   
                 </TableCell>

@@ -24,6 +24,7 @@ export type Book = {
   publishers: string[] | null
   format: string | null
   cover_i: number | null
+  cover_link?: string | null
   number_of_pages: number | null
   series: string | null
   series_position: number | null

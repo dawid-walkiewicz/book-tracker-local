@@ -1,10 +1,6 @@
 const { contextBridge, ipcRenderer } = require("electron")
 
 contextBridge.exposeInMainWorld("electronAPI", {
-  sendMessage: (channel, data) => {
-    ipcRenderer.send(channel, data)
-  },
-  onMessage: (channel, callback) => {
-    ipcRenderer.on(channel, (event, args) => callback(args))
-  },
+  saveCover: (fileData) => ipcRenderer.invoke("save-cover", fileData),
+  readFileAsBase64: (filePath) => ipcRenderer.invoke("read-file-as-base64", filePath)
 })

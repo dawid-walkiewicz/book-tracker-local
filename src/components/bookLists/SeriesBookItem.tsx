@@ -49,7 +49,7 @@ export const SeriesBookItem = ({
         <p className="text-2xl font-bold w-12 text-center">{book.series_position}</p>
 
         <div className="w-full flex-shrink-0 justify-center pt-2 sm:w-1/6 sm:pb-2 sm:pl-2">
-          <BookCoverLarge coverId={book.cover_i} title={book.title} />
+          <BookCoverLarge cover={book.cover_link || book.cover_i} title={book.title} />
         </div>
 
         <div className="flex-grow p-4 pb-0 pt-0 sm:pl-0">

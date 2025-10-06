@@ -1,15 +1,44 @@
-import { useState } from "react"
+import { useState, useEffect } from "react"
 import { AiOutlineLoading3Quarters } from "react-icons/ai"
 import NotFoundImage from "@/assets/image-not-found-icon.png"
 
 export const BookCoverSmall = ({
-  coverId,
+  cover,
   title,
 }: {
-  coverId: number | null
+  cover: number | string | null
   title: string
 }) => {
   const [loading, setLoading] = useState(true)
+  const [imgSrc, setImgSrc] = useState<string>(NotFoundImage)
+
+  useEffect(() => {
+    if (!cover) {
+      setImgSrc(NotFoundImage)
+      return
+    }
+    if (typeof cover === "number") {
+      setImgSrc(`https://covers.openlibrary.org/b/id/${cover}-L.jpg`)
+      return
+    }
+    if (typeof cover === "string") {
+      if (cover.startsWith("http://") || cover.startsWith("https://")) {
+        setImgSrc(cover)
+        return
+      }
+      if (cover.startsWith("data:image/")) {
+        setImgSrc(cover)
+        return
+      }
+      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+      // @ts-expect-error
+      window.electronAPI.readFileAsBase64(cover).then((base64: string | null) => {
+        setImgSrc(base64 || NotFoundImage)
+      })
+      return
+    }
+    setImgSrc(NotFoundImage)
+  }, [cover])
 
   return (
     <div className="relative">
@@ -20,11 +49,7 @@ export const BookCoverSmall = ({
         </div>
       )}
       <img
-        src={
-          coverId
-            ? `https://covers.openlibrary.org/b/id/${coverId}-M.jpg`
-            : NotFoundImage
-        }
+        src={imgSrc}
         alt={`Cover of ${title}`}
         className={`h-full w-full object-cover ${loading ? "hidden" : ""}`}
         onLoad={() => setLoading(false)}
@@ -34,13 +59,42 @@ export const BookCoverSmall = ({
 }
 
 export const BookCoverMedium = ({
-  coverId,
+  cover,
   title,
 }: {
-  coverId: number | null
+  cover: number | string | null
   title: string
 }) => {
   const [loading, setLoading] = useState(true)
+  const [imgSrc, setImgSrc] = useState<string>(NotFoundImage)
+
+  useEffect(() => {
+    if (!cover) {
+      setImgSrc(NotFoundImage)
+      return
+    }
+    if (typeof cover === "number") {
+      setImgSrc(`https://covers.openlibrary.org/b/id/${cover}-L.jpg`)
+      return
+    }
+    if (typeof cover === "string") {
+      if (cover.startsWith("http://") || cover.startsWith("https://")) {
+        setImgSrc(cover)
+        return
+      }
+      if (cover.startsWith("data:image/")) {
+        setImgSrc(cover)
+        return
+      }
+      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+      // @ts-expect-error
+      window.electronAPI.readFileAsBase64(cover).then((base64: string | null) => {
+        setImgSrc(base64 || NotFoundImage)
+      })
+      return
+    }
+    setImgSrc(NotFoundImage)
+  }, [cover])
 
   return (
     <div className="h-36 w-24">
@@ -50,11 +104,7 @@ export const BookCoverMedium = ({
         </div>
       )}
       <img
-        src={
-          coverId
-            ? `https://covers.openlibrary.org/b/id/${coverId}-M.jpg`
-            : NotFoundImage
-        }
+        src={imgSrc}
         alt={`Cover of ${title}`}
         className={`h-full w-full object-cover ${loading ? "hidden" : ""}`}
         onLoad={() => setLoading(false)}
@@ -64,30 +114,54 @@ export const BookCoverMedium = ({
 }
 
 export const BookCoverLarge = ({
-  coverId,
+  cover,
   title,
 }: {
-  coverId: number | null
+  cover: number | string | null
   title: string
 }) => {
   const [loading, setLoading] = useState(true)
+  const [imgSrc, setImgSrc] = useState<string>(NotFoundImage)
+
+  useEffect(() => {
+    if (!cover) {
+      setImgSrc(NotFoundImage)
+      return
+    }
+    if (typeof cover === "number") {
+      setImgSrc(`https://covers.openlibrary.org/b/id/${cover}-L.jpg`)
+      return
+    }
+    if (typeof cover === "string") {
+      if (cover.startsWith("http://") || cover.startsWith("https://")) {
+        setImgSrc(cover)
+        return
+      }
+      if (cover.startsWith("data:image/")) {
+        setImgSrc(cover)
+        return
+      }
+      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+      // @ts-expect-error
+      window.electronAPI.readFileAsBase64(cover).then((base64: string | null) => {
+        setImgSrc(base64 || NotFoundImage)
+      })
+      return
+    }
+    setImgSrc(NotFoundImage)
+  }, [cover])
 
   return (
     <div className="relative">
       {loading && (
         <div className="inset-0 flex items-center justify-center">
-          {" "}
           <AiOutlineLoading3Quarters className="size-16 animate-spin text-gray-900" />
         </div>
       )}
       <img
-        src={
-          coverId
-            ? `https://covers.openlibrary.org/b/id/${coverId}-L.jpg`
-            : NotFoundImage
-        }
+        src={imgSrc}
         alt={`Cover of ${title}`}
-        className={`mx-auto h-full w-1/2 rounded-lg object-cover ${coverId ? "" : "dark:invert"} sm:h-full sm:w-full sm:rounded-l-lg ${loading ? "hidden" : ""}`}
+        className={`mx-auto h-full w-1/2 rounded-lg object-cover ${cover ? "" : "dark:invert"} sm:h-full sm:w-full sm:rounded-l-lg ${loading ? "hidden" : ""}`}
         onLoad={() => setLoading(false)}
       />
     </div>

@@ -29,7 +29,7 @@ const SeriesCollapsible = ({
       items.push(
         <div className={`z-${50 - i * 10} ${i === 0 ? "" : "-ml-16"}`}>
           <BookCoverMedium
-            coverId={books[i].cover_i}
+            cover={books[i].cover_link ||books[i].cover_i}
             title={`Cover for ${books[i].title}`}
           />
         </div>,
@@ -40,7 +40,7 @@ const SeriesCollapsible = ({
       for (let i = items.length; i < 3; i++) {
         items.push(
           <div className={`z-${50 - i * 10} ${i === 0 ? "" : "-ml-16"} opacity-50`}>
-            <BookCoverMedium coverId={null} title={"Empty cover"} />
+            <BookCoverMedium cover={null} title={"Empty cover"} />
           </div>,
         )
       }

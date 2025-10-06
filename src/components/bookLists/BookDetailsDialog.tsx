@@ -105,7 +105,7 @@ export const BookDetailsDialog = ({
 
         <div className="flex flex-col sm:min-h-72 sm:flex-row sm:justify-evenly sm:gap-8">
           <div className="flex w-full items-center justify-center sm:w-1/3">
-            <BookCoverLarge coverId={book.cover_i} title="Cover" />
+            <BookCoverLarge cover={book.cover_link || book.cover_i} title="Cover" />
           </div>
 
           <div className="flex flex-col items-center gap-4 text-center sm:w-2/3 sm:items-start sm:text-left">
