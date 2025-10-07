@@ -48,19 +48,6 @@ source.
 
 4. **Install app**
 
-## Project Structure
-
-- `src/` – React + TypeScript source code
-- `electron/` – Electron main and preload scripts
-- `public/` – Static assets
-- `assets/` – Images and icons
-- `components/` – UI components
-- `Pages/` – Page views
-- `bookLists/`, `bookSearching/`, `ui/` – feature modules
-- `libraryStore.ts` – data storage logic
-- `vite.config.ts` – Vite configuration
-- `tailwind.config.js` – Tailwind CSS configuration
-
 ## Support
 
 If you have issues or questions, open an issue in the repository or contact the author.
