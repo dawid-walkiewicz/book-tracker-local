@@ -1,50 +1,71 @@
-# React + TypeScript + Vite
+# Book Tracker Local
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+A desktop application for managing your personal book library. Add, edit, search, and organize books and their covers.
+Works locally, but internet is needed for some features.
 
-Currently, two official plugins are available:
+## Features
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+- Add, edit, and delete books
+- Browse books by status (Completed, Reading, Plan to Read, Dropped)
+- Search for books (needs Internet)
+- Books can be organized into series
+- Cover image support (select file, save locally, default covers need internet)
+- Local data storage
+- Export and import library data as JSON
+- Dark mode support
 
-## Expanding the ESLint configuration
+![](screen-shots/img_1.png)
+![](screen-shots/img_2.png)
+![](screen-shots/img_3.png)
+![](screen-shots/img_4.png)
 
-If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
+## Installation
 
-- Configure the top-level `parserOptions` property like this:
+### Windows
 
-```js
-export default tseslint.config({
-  languageOptions: {
-    // other options...
-    parserOptions: {
-      project: ['./tsconfig.node.json', './tsconfig.app.json'],
-      tsconfigRootDir: import.meta.dirname,
-    },
-  },
-})
-```
+Windows installer is provided in [Releases](https://github.com/dawid-walkiewicz/book-tracker-local/releases/latest).
 
-- Replace `tseslint.configs.recommended` to `tseslint.configs.recommendedTypeChecked` or `tseslint.configs.strictTypeChecked`
-- Optionally add `...tseslint.configs.stylisticTypeChecked`
-- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and update the config:
+### Other Platforms
 
-```js
-// eslint.config.js
-import react from 'eslint-plugin-react'
+Installers for macOS and Linux are not currently provided. Follow the instructions below to build and run the app from
+source.
 
-export default tseslint.config({
-  // Set the react version
-  settings: { react: { version: '18.3' } },
-  plugins: {
-    // Add the react plugin
-    react,
-  },
-  rules: {
-    // other rules...
-    // Enable its recommended rules
-    ...react.configs.recommended.rules,
-    ...react.configs['jsx-runtime'].rules,
-  },
-})
-```
+1. **Requirements:**
+    - Node.js (recommended LTS version)
+    - npm or yarn
+
+2. **Install dependencies:**
+   ```cmd
+   npm install
+   ```
+
+3. **Build production app:**
+   ```cmd
+   npm run electron:build
+   ```
+   If you encounter issues, try running the command prompt as administrator.
+   After building, the installer can be found in the `dist` folder.
+
+4. **Install app**
+
+## Project Structure
+
+- `src/` – React + TypeScript source code
+- `electron/` – Electron main and preload scripts
+- `public/` – Static assets
+- `assets/` – Images and icons
+- `components/` – UI components
+- `Pages/` – Page views
+- `bookLists/`, `bookSearching/`, `ui/` – feature modules
+- `libraryStore.ts` – data storage logic
+- `vite.config.ts` – Vite configuration
+- `tailwind.config.js` – Tailwind CSS configuration
+
+## Support
+
+If you have issues or questions, open an issue in the repository or contact the author.
+Unfortunately, this is not a priority project, so support may be limited.
+
+## License
+This project is licensed under the MIT License. See the [LICENSE](LICENSE) file for details.
+
